@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebChemistry.Framework.Geometry</name>
+    </assembly>
+    <members>
+        <member name="T:WebChemistry.Framework.Geometry.ConvexFace`1">
+            <summary>
+            This simplex represents the convex face
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFace`1.AdjacentFaces">
+            <summary>
+            If the face is "at infinity", AdjacentFaces[i] = null.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.ConvexFaceInternal">
+            <summary>
+            This internal class manages the faces of the convex hull. It is a 
+            separate class from the desired user class.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexFaceInternal.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebChemistry.Framework.Geometry.ConvexFaceInternal"/> class.
+            </summary>
+            <param name="dimension">The dimension.</param>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.MinVertexBeyond">
+            <summary>
+            Buffer the "minimum" vertex
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFaceInternal.AdjacentFaces">
+            <summary>
+            Gets or sets the adjacent face data.
+            </summary>
+            <value>The adjacent face data.</value>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFaceInternal.VerticesBeyond">
+            <summary>
+            Gets or sets the vertices beyond.
+            </summary>
+            <value>The vertices beyond.</value>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFaceInternal.Vertices">
+            <summary>
+            Gets or sets the vertices.
+            </summary>
+            <value>The vertex, v1.</value>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFaceInternal.Normal">
+            <summary>
+            Gets or sets the normal vector.
+            </summary>
+            <value>The normal.</value>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiMesh`3.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            This omits the "infinite faces"
+            </summary>
+            <param name="data"></param>
+            <param name="vertices"></param>
+            <param name="edges"></param>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.DelaunayTriangulation`2">
+            <summary>
+            Calculation and representation of Delaunay triangulation.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+        </member>
+    </members>
+</doc>

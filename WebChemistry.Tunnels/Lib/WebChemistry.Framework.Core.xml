@@ -1,0 +1,768 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebChemistry.Framework.Core</name>
+    </assembly>
+    <members>
+        <member name="T:WebChemistry.Framework.Utils.WeakInteractiveListener`1">
+            <summary>
+            Implements a weak event listener that allows the owner to be garbage
+            collected if its only remaining link is an event handler.
+            </summary>
+            <typeparam name="TInstance">Type of rootInstance listening for the event.</typeparam>
+            <typeparam name="TSource">Type of source for the event.</typeparam>
+            <typeparam name="TEventArgs">Type of event arguments for the event.</typeparam>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakInteractiveListener`1._weakInstance">
+            <summary>
+            WeakReference to the rootInstance listening for the event.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakInteractiveListener`1._weakSource">
+            <summary>
+            To hold a reference to source object. With this instance the WeakEventListener 
+            can guarantee that the handler get unregistered when listener is released.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakInteractiveListener`1._onEventAction">
+            <summary>
+            Delegate to the method to call when the event fires.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakInteractiveListener`1._onDetachAction">
+            <summary>
+            Delegate to the method to call when detaching from the event.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakInteractiveListener`1.#ctor(`0,WebChemistry.Framework.Core.IInteractive)">
+            <summary>
+            Initializes a new instances of the WeakEventListener class.
+            </summary>
+            <param name="rootInstance">Instance subscribing to the event.</param>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakInteractiveListener`1.OnEvent(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            Handler for the subscribed event calls OnEventAction to handle it.
+            </summary>
+            <param name="source">Event source.</param>
+            <param name="eventArgs">Event arguments.</param>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakInteractiveListener`1.Detach">
+            <summary>
+            Detaches from the subscribed event.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Utils.WeakInteractiveListener`1.OnEventAction">
+            <summary>
+            Gets or sets the method to call when the event fires.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.Matrix3D.Append(WebChemistry.Framework.Math.Matrix3D)">
+            <summary>
+            Appends the matrix to the current matrix
+            </summary>
+            <param name="m"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.Matrix3D.Transform(WebChemistry.Framework.Math.Vector3D)">
+            <summary>
+            Multiples the vector by the matrix i.e. v * m
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.Matrix3D.Transform(WebChemistry.Framework.Math.Point3D)">
+            <summary>
+            Multiplies the point by the matrix i.e. p * m
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.Matrix3D.Transpose">
+            <summary>
+            Transposes the current matrix
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.Matrix3D.Invert">
+            <summary>
+            Inverts this instance of the matrix
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Math.Matrix3D.Identity">
+            <summary>
+            Returns an identity matrix instance
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Math.Matrix3D.HasInverse">
+            <summary>
+            Returns true if the matrix has an inverse
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Math.Matrix3D.Determinant">
+            <summary>
+            Returns the determinant of the matrix
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.ICloneable`1.Clone">
+            <summary>
+            Creates a deep copy of the object
+            </summary>
+            <returns>Deep copy of the object</returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2">
+            <summary>
+            Implements a weak event listener that allows the owner to be garbage
+            collected if its only remaining link is an event handler.
+            </summary>
+            <typeparam name="TInstance">Type of rootInstance listening for the event.</typeparam>
+            <typeparam name="TSource">Type of source for the event.</typeparam>
+            <typeparam name="TEventArgs">Type of event arguments for the event.</typeparam>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2._weakInstance">
+            <summary>
+            WeakReference to the rootInstance listening for the event.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2._weakSource">
+            <summary>
+            To hold a reference to source object. With this instance the WeakEventListener 
+            can guarantee that the handler get unregistered when listener is released.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2._onEventAction">
+            <summary>
+            Delegate to the method to call when the event fires.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2._onDetachAction">
+            <summary>
+            Delegate to the method to call when detaching from the event.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2.#ctor(`0,`1)">
+            <summary>
+            Initializes a new instances of the WeakEventListener class.
+            </summary>
+            <param name="rootInstance">Instance subscribing to the event.</param>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2.OnEvent(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            Handler for the subscribed event calls OnEventAction to handle it.
+            </summary>
+            <param name="source">Event source.</param>
+            <param name="eventArgs">Event arguments.</param>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2.Detach">
+            <summary>
+            Detaches from the subscribed event.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Utils.WeakNotifyPropertyChangedListener`2.OnEventAction">
+            <summary>
+            Gets or sets the method to call when the event fires.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.Rotation3D.CreateRotationMatrix(WebChemistry.Framework.Math.Point3D,WebChemistry.Framework.Math.Vector3D,System.Double)">
+            <summary>
+            Creates a rotation matrix
+            </summary>
+            <param name="center">Center</param>
+            <param name="axis">Axis</param>
+            <param name="angle">Angle in degrees</param>
+            <returns>Rotation matrix</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.AtomEx.ResidueIdentifier(WebChemistry.Framework.Core.IAtom)">
+            <summary>
+            PDB residues are uniquely identified by chain identifier and seq. number.
+            </summary>
+            <param name="atom"></param>
+            <returns>  </returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:WebChemistry.Framework.Geometry.K3DTree`1" -->
+        <member name="T:WebChemistry.Framework.Utils.WeakEventListener`3">
+            <summary>
+            Implements a weak event listener that allows the owner to be garbage
+            collected if its only remaining link is an event handler.
+            </summary>
+            <typeparam name="TInstance">Type of rootInstance listening for the event.</typeparam>
+            <typeparam name="TSource">Type of source for the event.</typeparam>
+            <typeparam name="TEventArgs">Type of event arguments for the event.</typeparam>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakEventListener`3._weakInstance">
+            <summary>
+            WeakReference to the rootInstance listening for the event.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakEventListener`3._weakSource">
+            <summary>
+            To hold a reference to source object. With this instance the WeakEventListener 
+            can guarantee that the handler get unregistered when listener is released.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakEventListener`3._onEventAction">
+            <summary>
+            Delegate to the method to call when the event fires.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Utils.WeakEventListener`3._onDetachAction">
+            <summary>
+            Delegate to the method to call when detaching from the event.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakEventListener`3.#ctor(`0,`1)">
+            <summary>
+            Initializes a new instances of the WeakEventListener class.
+            </summary>
+            <param name="rootInstance">Instance subscribing to the event.</param>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakEventListener`3.OnEvent(System.Object,`2)">
+            <summary>
+            Handler for the subscribed event calls OnEventAction to handle it.
+            </summary>
+            <param name="source">Event source.</param>
+            <param name="eventArgs">Event arguments.</param>
+        </member>
+        <member name="M:WebChemistry.Framework.Utils.WeakEventListener`3.Detach">
+            <summary>
+            Detaches from the subscribed event.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Utils.WeakEventListener`3.OnEventAction">
+            <summary>
+            Gets or sets the method to call when the event fires.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Utils.WeakEventListener`3.OnDetachAction">
+            <summary>
+            Gets or sets the method to call when detaching from the event.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:WebChemistry.Framework.Core.StructureReader.ReadPdb(System.IO.TextReader,System.String,System.Boolean)" -->
+        <member name="M:WebChemistry.Framework.Core.StructureReader.ReadMdlMol(System.IO.TextReader,System.String)">
+            <summary>
+            Loads structure from MDL MOL format - see http://www.symyx.com/downloads/public/ctfile/ctfile.pdf for more details about the format.
+            The current implementation is INCOMPLETE IMPLEMENTATION OF MDL MOL FORMAT!
+            </summary>
+            <param name="reader">input stream</param>
+            <returns>Structure constructed from the file. INCOMPLETE IMPLEMENTATION OF MDL MOL FORMAT!</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.StructureReader.ReadMol2(System.IO.TextReader,System.String)">
+            <summary>
+            Loads structure from MOL2 format - see http://tripos.com/tripos_resources/fileroot/pdfs/mol2_format.pdf for more details about the format.
+            The current implementation is INCOMPLETE IMPLEMENTATION OF MOL1 FORMAT!
+            If the file contains partial charges, saves them to the "PartialCharge" property.
+            </summary>
+            <param name="reader">input stream</param>
+            <returns>Structure constructed from the file. INCOMPLETE IMPLEMENTATION OF MOL2 FORMAT!</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.RegisterWeakPropertyChangedListener``2(``1,``0,System.Action{``0,``1,System.String})">
+            <summary>
+            Registers a weak listener for the PropertyChanged event.
+            Arguments passed to callback are listener, sender and PropertyName.
+            </summary>
+            <typeparam name="TListener"></typeparam>
+            <param name="obj"></param>
+            <param name="listener"></param>
+            <param name="onEventAction"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.RegisterWeakInteractivePropertyChangedListener``1(WebChemistry.Framework.Core.IInteractive,``0,System.Action{``0,WebChemistry.Framework.Core.IInteractive})">
+            <summary>
+            Registers a listener notify event on IsSelected and IsHighligted properties.
+            The interactive object is passed to the callback as the second parameter.
+            </summary>
+            <typeparam name="TListener"></typeparam>
+            <param name="obj"></param>
+            <param name="listener"></param>
+            <param name="onChanged"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.AsObservable(System.ComponentModel.INotifyPropertyChanged)">
+            <summary>
+            Creates observable of property name from the PropertyChanged event.
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.WritePdb(WebChemistry.Framework.Core.IStructure,System.IO.TextWriter)">
+            <summary>
+            Writes a PDB representation to a file. Shortcut for StructureWriter.WritePdb.
+            </summary>
+            <param name="structure"></param>
+            <param name="writer"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.EqualIgnoreCase(System.String,System.String)">
+            <summary>
+            Invariant string compare, ignores case.
+            </summary>
+            <param name="str"></param>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.OtherAtom(WebChemistry.Framework.Core.IBond,WebChemistry.Framework.Core.IAtom)">
+            <summary>
+            Other atom of the bond.
+            </summary>
+            <param name="bond"></param>
+            <param name="atom"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.Run``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0,System.Int32})">
+            <summary>
+            Run extension with index counting.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="xs"></param>
+            <param name="func"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.GeometricalCenterAndRadius(WebChemistry.Framework.Core.IStructure)">
+            <summary>
+            Computes geometrical center of the structure.
+            </summary>
+            <param name="structure"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.ToCentroidCoordinates(WebChemistry.Framework.Core.IStructure)">
+            <summary>
+            Makes the geometrical center the origin and returns the molecule radius.
+            </summary>
+            <param name="structure"></param>
+            <returns>Radius of the molecule and the coordinates of the center</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.Translate(WebChemistry.Framework.Core.IStructure,WebChemistry.Framework.Math.Vector3D)">
+            <summary>
+            Translates the structure by the given vector.
+            </summary>
+            <param name="structure"></param>
+            <param name="by"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.CopyPropertiesFrom(WebChemistry.Framework.Core.IPropertyObject,WebChemistry.Framework.Core.IPropertyObject)">
+            <summary>
+            Copies dynamic properties from another object.
+            </summary>
+            <param name="obj"></param>
+            <param name="from"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.ClearSelection(WebChemistry.Framework.Core.ResidueCollection)">
+            <summary>
+            Sets IsSelected to false for all residues.
+            </summary>
+            <param name="residues">Residue collection</param>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.ToHashSet``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Convertes the enumberable to a HashSet of T
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="xs"></param>
+            <returns>HashSet of the input enumerable</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Core.CoreEx.ToReadOnlyCollection``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Created an read-only collection from the enumerable.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="xs"></param>
+            <returns>ReadOnlyCollection of the input enumerable.</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathHelper.SphereFromPoints(WebChemistry.Framework.Math.Point3D[])">
+            <summary>
+            Computes the center and radius of a sphere determined by 4 points.
+            Implementation of http://mathworld.wolfram.com/Circumsphere.html.
+            </summary>
+            <param name="points">Array of 4 points</param>
+            <returns>Center and radius of the sphere.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:WebChemistry.Framework.Geometry.PriorityQueue" -->
+        <member name="F:WebChemistry.Framework.Geometry.PriorityQueue.maxPriority">
+            The maximum priority possible in this priority queue.
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.PriorityQueue.data">
+            This contains the list of objects in the queue.
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.PriorityQueue.value">
+            This contains the list of prioritys in the queue.
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.PriorityQueue.count">
+            Holds the number of elements currently in the queue.
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.PriorityQueue.capacity">
+            This holds the number elements this queue can have.
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.#ctor">
+            Creates a new <code>PriorityQueue</code> object. The
+            <code>PriorityQueue</code> object allows objects to be
+            entered into the queue and to leave in the order of
+            priority i.e the highest priority get's to leave first.
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.#ctor(System.Int32)">
+             Creates a new <code>PriorityQueue</code> object. The
+             <code>PriorityQueue</code> object allows objects to
+             be entered into the queue an to leave in the order of
+             priority i.e the highest priority get's to leave first.
+            
+             @param capacity the initial capacity of the queue before
+             a resize
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.#ctor(System.Int32,System.Double)">
+             Creates a new <code>PriorityQueue</code> object. The
+             <code>PriorityQueue</code> object allows objects to
+             be entered into the queue an to leave in the order of
+             priority i.e the highest priority get's to leave first.
+            
+             @param capacity the initial capacity of the queue before
+             a resize
+             @param maxPriority is the maximum possible priority for
+             an object
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.init(System.Int32)">
+             This is an initializer for the object. It basically initializes
+             an array of long called value to represent the prioritys of
+             the objects, it also creates an array of objects to be used
+             in parallel with the array of longs, to represent the objects
+             entered, these can be used to sequence the data.
+            
+             @param size the initial capacity of the queue, it can be
+             resized
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.add(System.Object,System.Double)">
+             This function adds the given object into the <code>PriorityQueue</code>,
+             its priority is the long priority. The way in which priority can be
+             associated with the elements of the queue is by keeping the priority
+             and the elements array entrys parallel.
+            
+             @param element is the object that is to be entered into this
+             <code>PriorityQueue</code>
+             @param priority this is the priority that the object holds in the
+             <code>PriorityQueue</code>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.remove">
+             Remove is a function to remove the element in the queue with the
+             maximum priority. Once the element is removed then it can never be
+             recovered from the queue with further calls. The lowest priority
+             object will leave last.
+            
+             @return the object with the highest priority or if it's empty
+             null
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.bubbleDown(System.Int32)">
+             Bubble down is used to put the element at subscript 'pos' into
+             it's rightful place in the heap (i.e heap is another name
+             for <code>PriorityQueue</code>). If the priority of an element
+             at subscript 'pos' is less than it's children then it must
+             be put under one of these children, i.e the ones with the
+             maximum priority must come first.
+            
+             @param pos is the position within the arrays of the element
+             and priority
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.bubbleUp(System.Int32)">
+             Bubble up is used to place an element relatively low in the
+             queue to it's rightful place higher in the queue, but only
+             if it's priority allows it to do so, similar to bubbleDown
+             only in the other direction this swaps out its parents.
+            
+             @param pos the position in the arrays of the object
+             to be bubbled up
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.expandCapacity">
+            This ensures that there is enough space to keep adding elements
+            to the priority queue. It is however advised to make the capacity
+            of the queue large enough so that this will not be used as it is
+            an expensive method. This will copy across from 0 as 'off' equals
+            0 is contains some important data.
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.clear">
+            This method will empty the queue. This also helps garbage
+            collection by releasing any reference it has to the elements
+            in the queue. This starts from offset 1 as off equals 0
+            for the elements array.
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.PriorityQueue.length">
+             The number of elements in the queue. The length
+             indicates the number of elements that are currently
+             in the queue.
+            
+             @return the number of elements in the queue
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.NearestNeighborList">
+            <summary>
+            Bjoern Heckel's solution to the KD-Tree n-nearest-neighbor problem
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.KeyDuplicateException">
+            <summary>
+            KeyDuplicateException is thrown when the <TT>KDTree.insert</TT> method
+            is invoked on a key already in the KDTree.
+            
+            @author Simon Levy
+            Translation by Marco A. Alvarez
+            </summary> 
+        </member>
+        <member name="P:WebChemistry.Framework.Core.IBond.Id">
+            <summary>
+            Calculated from IDs of A and B as (i + j) * (i + j + 1) / 2 + j where i is the smaller id and j is the larger one.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.Angle(WebChemistry.Framework.Math.Vector3D,WebChemistry.Framework.Math.Vector3D)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns>Angle in radians</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.Add(WebChemistry.Framework.Math.Vector,WebChemistry.Framework.Math.Vector)">
+            <summary>
+            Adds 2 vectors. Checks dimensions.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.AddFast(WebChemistry.Framework.Math.Vector,WebChemistry.Framework.Math.Vector,System.Int32)">
+            <summary>
+            Does not check for dimensions (slightly faster than Add)
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.Subtract(WebChemistry.Framework.Math.Vector,WebChemistry.Framework.Math.Vector)">
+            <summary>
+            Subtracts 2 vectors. Checks dimensions.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.SubtractFast(WebChemistry.Framework.Math.Vector,WebChemistry.Framework.Math.Vector,System.Int32)">
+            <summary>
+            Does not check for dimensions (slightly faster than Subtract)
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.Dot(WebChemistry.Framework.Math.Vector,WebChemistry.Framework.Math.Vector)">
+            <summary>
+            Dot product. Checks dimensions.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.DotFast(WebChemistry.Framework.Math.Vector,WebChemistry.Framework.Math.Vector,System.Int32)">
+            <summary>
+            Does not check for dimensions (slightly faster than Dot)
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.LUDecomposition(WebChemistry.Framework.Math.Matrix)">
+            <summary>
+              LU decomposition of A.
+            </summary>
+            <param name = "m">The matrix to invert. This matrix is unchanged by this function.</param>
+            <returns>A matrix of equal size to A that combines the L and U. Here the diagonals belongs to L and the U's diagonal elements are all 1.</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.MathEx.Solve(WebChemistry.Framework.Math.Matrix,WebChemistry.Framework.Math.Vector)">
+            <summary>
+            !!!! This does not work when there are zero diagonal elements, use at own risk.
+            </summary>
+            <param name="m"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.KeyMissingException">
+            <summary>
+            Key-size mismatch exception supporting KDTree class
+            
+            @author Simon Levy
+            Translation by Marco A. Alvarez
+            </summary> 
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.HRect">
+            <summary>
+            Hyper-Rectangle class supporting KDTree class
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Math.Vector">
+            <summary>
+            Represents a double vector
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Math.Vector.#ctor(System.Double[],System.Boolean)">
+            <summary>
+            Creates an instance of a vector
+            </summary>
+            <param name="data"></param>
+            <param name="copy">determine whether to copy the data or not</param>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.HPoint">
+            <summary>
+            Hyper-Point class supporting KDTree class
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.KeySizeException">
+            <summary>
+            KeySizeException is thrown when a KDTree method is invoked on a
+            key whose size (array length) mismatches the one used in the that
+            KDTree's constructor.
+            
+            @author Simon Levy
+            Translation by Marco A. Alvarez
+            </summary> 
+        </member>
+        <member name="M:WebChemistry.Framework.Core.PdbStructure.WithChains(System.Collections.Generic.IEnumerable{System.Char},System.String)">
+            <summary>
+            Creates a deep copy of the structure containing only the listed chains.
+            Coordinates are preserved.
+            </summary>
+            <param name="chains"></param>
+            <param name="newId"></param>
+            <returns></returns>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbName">
+            <summary>
+            PDB name [string]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbRecordName">
+            <summary>
+            PDB record name [string]. Usually ATOM or HETATM.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbSerialNumber">
+            <summary>
+            PDB residue name [int]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbResidueName">
+            <summary>
+            PDB residue name [string]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbResidueSequenceNumber">
+            <summary>
+            PDB residue sequence number [int]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbInsertionResidueCode">
+            <summary>
+            PDB insertion residue code [char]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbChainIdentifier">
+            <summary>
+            PDB chain identifier [char]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbAlternateLocaltionIdentifier">
+            <summary>
+            PDB alternate location identifier [char]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbOccupancy">
+            <summary>
+            PDB occupancy [double]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbTemperatureFactor">
+            <summary>
+            PDB temperature factor [double]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbSegmentIdentifier">
+            <summary>
+            PDB segment identifier [string]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.PdbCharge">
+            <summary>
+            PDB charge [string]
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Core.AtomProperties.Mol2PartialCharge">
+            <summary>
+            Mol2 Atom charge [double]
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:WebChemistry.Framework.Geometry.KDTree" -->
+        <member name="M:WebChemistry.Framework.Geometry.KDTree.#ctor(System.Int32)">
+             Creates a KD-tree with specified number of dimensions.
+            
+             @param k number of dimensions
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.KDTree.insert(System.Double[],System.Object)">
+             Insert a node in a KD-tree.  Uses algorithm translated from 352.ins.c of
+            
+               <PRE>
+               &#064;Book{GonnetBaezaYates1991,                                   
+                 author =    {G.H. Gonnet and R. Baeza-Yates},
+                 title =     {Handbook of Algorithms and Data Structures},
+                 publisher = {Addison-Wesley},
+                 year =      {1991}
+               }
+               </PRE>
+            
+             @param key key for KD-tree node
+             @param value value at that key
+            
+             @throws KeySizeException if key.length mismatches K
+             @throws KeyDuplicateException if key already in tree
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:WebChemistry.Framework.Geometry.KDTree.search(System.Double[])" -->
+        <member name="M:WebChemistry.Framework.Geometry.KDTree.delete(System.Double[])">
+             Delete a node from a KD-tree.  Instead of actually deleting node and
+             rebuilding tree, marks node as deleted.  Hence, it is up to the caller
+             to rebuild the tree as needed for efficiency.
+            
+             @param key key for KD-tree node
+            
+             @throws KeySizeException if key.length mismatches K
+             @throws KeyMissingException if no node in tree has key
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.KDTree.nearest(System.Double[])">
+                    * Find KD-tree node whose key is nearest neighbor to
+                    * key. Implements the Nearest Neighbor algorithm (Table 6.4) of
+                    *
+                    * <PRE>
+                    * &#064;techreport{AndrewMooreNearestNeighbor,
+                    *   author  = {Andrew Moore},
+                    *   title   = {An introductory tutorial on kd-trees},
+                    *   institution = {Robotics Institute, Carnegie Mellon University},
+                    *   year    = {1991},
+                    *   number  = {Technical Report No. 209, Computer Laboratory, 
+                    *              University of Cambridge},
+                    *   address = {Pittsburgh, PA}
+                    * }
+                    * </PRE>
+                    *
+                    * @param key key for KD-tree node
+                    *
+                    * @return object at node nearest to key, or null on failure
+                    *
+                    * @throws KeySizeException if key.length mismatches K
+            
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.KDTree.nearest(System.Double[],System.Int32)">
+             Find KD-tree nodes whose keys are <I>n</I> nearest neighbors to
+             key. Uses algorithm above.  Neighbors are returned in ascending
+             order of distance to key. 
+            
+             @param key key for KD-tree node
+             @param n how many neighbors to find
+            
+             @return objects at node nearest to key, or null on failure
+            
+             @throws KeySizeException if key.length mismatches K
+             @throws IllegalArgumentException if <I>n</I> is negative or
+             exceeds tree size 
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:WebChemistry.Framework.Geometry.KDTree.range(System.Double[],System.Double[])" -->
+        <member name="T:WebChemistry.Framework.Geometry.KDTree.KDNode">
+            <summary>
+            K-D Tree node class
+            </summary>
+        </member>
+    </members>
+</doc>

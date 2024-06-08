@@ -1,0 +1,8 @@
+option batch abort
+option confirm off
+open dave@ncbr.muni.cz
+cd www
+cd Tunnels
+put TunnelsBeta.zip
+put TunnelsServer.zip
+exit

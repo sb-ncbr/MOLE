@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tunnels>
+  <Input>./tests/1TQN.pdb</Input>
+  <WorkingDirectory>./test_query_origin/</WorkingDirectory>
+  <Params>
+    <Cavity ProbeRadius="3" InteriorThreshold="1.25" />
+    <Tunnel SurfaceCoverRadius="10" OriginRadius="5" />
+  </Params>
+  <Export>
+    <Formats Mesh="1" PyMol="1" CSV="1" />
+    <Types Cavities="1" Tunnels="1" />
+    <Mesh Density="1.33" Compress="1" />
+    <PyMol PDBId="1TQN" SurfaceType="Surface"  />
+  </Export>
+  <Origins Auto="0">
+    <Origin>
+      <Query>Residues("HEM")</Query>
+    </Origin>
+  </Origins>
+</Tunnels>

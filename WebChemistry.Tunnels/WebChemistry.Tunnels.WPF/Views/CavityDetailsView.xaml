@@ -1,0 +1,101 @@
+﻿<Window x:Class="WebChemistry.Tunnels.WPF.Views.CavityDetailsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cavity Details" Width="550" Height="400"
+		ShowInTaskbar="False" WindowStyle="ToolWindow">
+    <Grid Background="{DynamicResource NormalBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="8,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="InfoText">
+			<Run Text="{Binding Cavity.Complex.Structure.Id, Mode=OneWay, FallbackValue='n/a'}" /><Run Text=": Cavity " /><Run Text="{Binding Cavity.Id, Mode=OneWay, FallbackValue=0}" /><Run 
+                Text=", depth =  " /><Run Text="{Binding Cavity.Depth, Mode=OneWay, FallbackValue=0}"/><Run 
+                Text=", volume =  " /><Run Text="{Binding Cavity.Volume, Mode=OneWay, FallbackValue=0.00, StringFormat=0.00}"/><Run Text="" /></TextBlock>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,9,0">
+            <Button Style="{DynamicResource HyperlinkButton}" Content="Copy XML"  Click="Button_CopyXML" ToolTip="Copy a XML representation of the cavity to the Clipboard." />            
+        </StackPanel>
+
+        <Rectangle Fill="{DynamicResource LightBrush}" Grid.Row="1" />
+        
+        <Grid Grid.Row="2" Margin="6 0 6 6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <StackPanel>
+                <TextBlock Margin="0 3 0 0" FontWeight="Bold" ToolTip="Properties computed from residues that do not have at least one atom on the molecular surface.">Physicochemical properties</TextBlock>
+                <StackPanel Margin="0 3 0 3">
+                    <TextBlock FontWeight="Bold" FontStyle="Italic" ToolTip="Properties computed from residues that do not have at least one atom on the molecular surface.">Boundary residues</TextBlock>
+                    <WrapPanel DataContext="{Binding Cavity.BoundaryProperties}">
+                        <TextBlock Margin="0 0 10 0"><Run Text="Charge: " FontStyle="Italic" ToolTip="The sum of charges along the tunnel." /><Run 
+                            Text="{Binding Charge, FallbackValue=0, Mode=OneTime}" /><Run Text=" (" /><Run 
+                            Text="{Binding NumPositives, FallbackValue=0, Mode=OneTime}" ToolTip="Number of positively charge residues." /><Run Text="-" /><Run 
+                            Text="{Binding NumNegatives, FallbackValue=0, Mode=OneTime}" ToolTip="Number of negatively charge residues." /><Run Text=")" /></TextBlock>
+                        <!--TextBlock Margin="0 0 10 0"><Run Text="Hydratation: " FontStyle="Italic" ToolTip="Weighted hydration indices of individual side-chains."  /><Run Text="{Binding LayerWeightedPhysicoChemicalProperties.Hydratation, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock-->
+                        <TextBlock Margin="0 0 10 0"><Run Text="Hydropathy: " FontStyle="Italic" ToolTip="Hydropathy indices of individual side-chains (most hydrophilic Arg = -4.5, most hydrophobic Ile = 4.5)."  /><Run Text="{Binding Hydropathy, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock Margin="0 0 10 0"><Run Text="Hydrophobicity: " FontStyle="Italic" ToolTip="Hydrophobicity indices of individual side-chains (most hydrophilic Glu = -1.14, most hydrophobic Ile = 1.81)."  /><Run Text="{Binding Hydrophobicity, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock Margin="0 0 10 0"><Run Text="Polarity: " FontStyle="Italic" ToolTip="Polarity index (nonpolar Ala = 0, polar Ser = 1.67, charged Arg = 52.00)." /><Run Text="{Binding Polarity, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock><Run Text="Mutability: " FontStyle="Italic"  ToolTip="Mutability indices (lowest mutability Cys = 44, highest mutability Ser = 117)." /><Run Text="{Binding Mutability, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+                <StackPanel Margin="0 3 0 3">
+                    <TextBlock FontWeight="Bold" FontStyle="Italic" ToolTip="Properties computed from residues that do not have any atoms on the molecular surface.">Inner residues</TextBlock>
+                    <WrapPanel DataContext="{Binding Cavity.InnerProperties}">
+                        <TextBlock Margin="0 0 10 0"><Run Text="Charge: " FontStyle="Italic" ToolTip="The sum of charges along the tunnel." /><Run 
+                            Text="{Binding Charge, FallbackValue=0, Mode=OneTime}" /><Run Text=" (" /><Run 
+                            Text="{Binding NumPositives, FallbackValue=0, Mode=OneTime}" ToolTip="Number of positively charge residues." /><Run Text="-" /><Run 
+                            Text="{Binding NumNegatives, FallbackValue=0, Mode=OneTime}" ToolTip="Number of negatively charge residues." /><Run Text=")" /></TextBlock>
+                        <!--TextBlock Margin="0 0 10 0"><Run Text="Hydratation: " FontStyle="Italic" ToolTip="Weighted hydration indices of individual side-chains."  /><Run Text="{Binding LayerWeightedPhysicoChemicalProperties.Hydratation, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock-->
+                        <TextBlock Margin="0 0 10 0"><Run Text="Hydropathy: " FontStyle="Italic" ToolTip="Hydropathy indices of individual side-chains (most hydrophilic Arg = -4.5, most hydrophobic Ile = 4.5)."  /><Run Text="{Binding Hydropathy, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock Margin="0 0 10 0"><Run Text="Hydrophobicity: " FontStyle="Italic" ToolTip="Hydrophobicity indices of individual side-chains (most hydrophilic Glu = -1.14, most hydrophobic Ile = 1.81)."  /><Run Text="{Binding Hydrophobicity, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock Margin="0 0 10 0"><Run Text="Polarity: " FontStyle="Italic" ToolTip="Polarity index (nonpolar Ala = 0, polar Ser = 1.67, charged Arg = 52.00)." /><Run Text="{Binding Polarity, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock><Run Text="Mutability: " FontStyle="Italic"  ToolTip="Mutability indices (lowest mutability Cys = 44, highest mutability Ser = 117)." /><Run Text="{Binding Mutability, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+
+                <StackPanel Margin="0 3 0 3">
+                    <TextBlock FontWeight="Bold" FontStyle="Italic" ToolTip="Properties computed from all residues.">All residues</TextBlock>
+                    <WrapPanel DataContext="{Binding Cavity.GlobalProperties}">
+                        <TextBlock Margin="0 0 10 0"><Run Text="Charge: " FontStyle="Italic" ToolTip="The sum of charges along the tunnel." /><Run 
+                            Text="{Binding Charge, FallbackValue=0, Mode=OneTime}" /><Run Text=" (" /><Run 
+                            Text="{Binding NumPositives, FallbackValue=0, Mode=OneTime}" ToolTip="Number of positively charge residues." /><Run Text="-" /><Run 
+                            Text="{Binding NumNegatives, FallbackValue=0, Mode=OneTime}" ToolTip="Number of negatively charge residues." /><Run Text=")" /></TextBlock>
+                        <!--TextBlock Margin="0 0 10 0"><Run Text="Hydratation: " FontStyle="Italic" ToolTip="Weighted hydration indices of individual side-chains."  /><Run Text="{Binding LayerWeightedPhysicoChemicalProperties.Hydratation, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock-->
+                        <TextBlock Margin="0 0 10 0"><Run Text="Hydropathy: " FontStyle="Italic" ToolTip="Hydropathy indices of individual side-chains (most hydrophilic Arg = -4.5, most hydrophobic Ile = 4.5)."  /><Run Text="{Binding Hydropathy, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock Margin="0 0 10 0"><Run Text="Hydrophobicity: " FontStyle="Italic" ToolTip="Hydrophobicity indices of individual side-chains (most hydrophilic Glu = -1.14, most hydrophobic Ile = 1.81)."  /><Run Text="{Binding Hydrophobicity, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock Margin="0 0 10 0"><Run Text="Polarity: " FontStyle="Italic" ToolTip="Polarity index (nonpolar Ala = 0, polar Ser = 1.67, charged Arg = 52.00)." /><Run Text="{Binding Polarity, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                        <TextBlock><Run Text="Mutability: " FontStyle="Italic"  ToolTip="Mutability indices (lowest mutability Cys = 44, highest mutability Ser = 117)." /><Run Text="{Binding Mutability, StringFormat='0.00', FallbackValue=0.00, Mode=OneTime}" /></TextBlock>
+                    </WrapPanel>
+                </StackPanel>                
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock FontWeight="Bold" ToolTip="Residues that have at least one atom on the molecular surface." x:Name="boundaryLabel">Boundary Residues (0)</TextBlock>
+                <TextBox Grid.Row="1" IsReadOnly="True" Margin="0 3 0 0" x:Name="boundaryResiduesBox" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                </TextBox>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0 3 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock FontWeight="Bold" ToolTip="Residues that have no atoms on the molecular surface." x:Name="innerLabel">Inner Residues (0)</TextBlock>
+                <TextBox Grid.Row="1" IsReadOnly="True" Margin="0 3 0 0" x:Name="innerResiduesBox" TextWrapping="Wrap"  ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                </TextBox>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

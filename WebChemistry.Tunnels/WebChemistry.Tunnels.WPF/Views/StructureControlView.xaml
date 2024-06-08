@@ -1,0 +1,944 @@
+﻿<UserControl x:Class="WebChemistry.Tunnels.WPF.Views.StructureControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:TunnelControls="clr-namespace:WebChemistry.Tunnels.WPF.Controls"
+             xmlns:local="clr-namespace:WebChemistry.Tunnels.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ListVertBar" TargetType="{x:Type ScrollBar}">
+            <Grid Background="#FF222222" Width="7">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.00001*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Name="ScrollbarTrack" Grid.Row="1" Background="{StaticResource _scrollbarTrack}" />
+
+                <Track Grid.ColumnSpan="3" Grid.Row="1" Name="PART_Track" IsDirectionReversed="true">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource ScrollBarVerticalThumb}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter TargetName="ScrollbarTrack" Property="Background" Value="{StaticResource _scrollbarTrackHover}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ScrollViewerControlTemplate1" TargetType="{x:Type ScrollViewer}">
+            <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+                <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+                <ScrollBar x:Name="PART_VerticalScrollBar" Width="7" Template="{StaticResource ListVertBar}" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
+                <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Resources>
+            <local:BooleanToVisibilityConverter x:Key="boolVisibilityConverter" />
+        </Grid.Resources>
+        <ScrollViewer Width="300" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" SnapsToDevicePixels="True" Margin="0 0 0 0" VerticalScrollBarVisibility="Auto" Template="{DynamicResource ScrollViewerControlTemplate1}">
+            <Border VerticalAlignment="Stretch" Margin="0 0 0 0" CornerRadius="0" Padding="2,2,2,4">
+                <StackPanel>
+
+                    <Border Background="#FF424242" Padding="6 4">
+                        <TextBlock FontWeight="Bold">Refinement</TextBlock>
+                    </Border>
+
+                    <Expander IsExpanded="False" x:Name="chainsPanel">
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Chains"/></TextBlock>
+                                <Button HorizontalAlignment="Right" Padding="6,0" Margin="10,0,0,0" Command="{Binding UpdateChainsCommand, Mode=OneWay}" Content="Update" Style="{DynamicResource HyperlinkButton}" ToolTip="Changes the chain selection and recomputes everything."
+									Visibility="{Binding ElementName=chainsPanel,Path=IsExpanded, Mode=OneWay, Converter={StaticResource boolVisibilityConverter}}"/>
+                            </Grid>
+                        </Expander.Header>
+                        <ItemsControl ItemsSource="{Binding ChainDescriptions, Mode=OneWay}" Margin="5,2">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Storyboard x:Key="HighlightOn" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                        <Storyboard x:Key="HighlightOff" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </DataTemplate.Resources>
+                                    <Grid x:Name="grid">
+                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Content="{Binding Name, Mode=OneWay}" Margin="0,0,8,0" />
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Expander>
+
+                    <Expander IsExpanded="False" x:Name="activeResiduesPanel">
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Active Atoms/Residues" ToolTip="This is the list of residues that participate in the computation of the molecule triangulation."/><Run 
+                                    Text=" ("/><Run Text="{Binding CurrentActiveResidues, FallbackValue=0}" /><Run Text=" of " /><Run Text="{Binding MaxActiveResidues, FallbackValue=0}" /><Run Text=")" /></TextBlock>
+                                <Button HorizontalAlignment="Right" Padding="6,0" Margin="10,0,0,0" Command="{Binding UpdateActiveResiduesCommand, Mode=OneWay}" Content="Update" Style="{DynamicResource HyperlinkButton}" 
+                                        ToolTip="Updates the molecule to reflect your changes." Visibility="Hidden" />
+                                <!-- Visibility="{Binding ElementName=activeResiduesPanel,Path=IsExpanded, Mode=OneWay, Converter={StaticResource boolVisibilityConverter}}"/-->
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical" Margin="5, 2">
+                            <CheckBox IsChecked="{Binding IgnoreHETAtoms}" ToolTip="If checked, HET atoms/residues are not included in the computation. It is still required to 'Update'.">Ignore HET Atoms/Residues</CheckBox>
+                            <CheckBox Margin="0 2 0 0" IsChecked="{Binding IgnoreHydrogens}" ToolTip="If checked, hydrogen atoms are not included in the computation. It is still required to 'Update'.">Ignore Hydrogens</CheckBox>
+                            <Grid Margin="0 2 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="40" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Text='Residues("HEM")' Grid.Row="2" x:Name="activeResiduesText">
+                                    <!-- Text="{Binding ActiveResiduesText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"> -->
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock>
+											<!-- comma separated list of residue identifiers (numbers and chains are enough), for example:<LineBreak />
+											205 A, 308 A<LineBreak />
+											To specify ' ' chain, enter only the number.-->
+                                            Enter a PatternQuery expression.
+                                        </TextBlock>
+                                    </ToolTipService.ToolTip>
+                                </TextBox>
+                                <Button Grid.Column="1" Grid.Row="2" Margin="2,0,0,0" Command="{Binding UnSelectActiveResiduesCommand, Mode=OneTime}" CommandParameter="{Binding Text, ElementName=activeResiduesText}"
+                                        Content="-" Background="#FF494949" ToolTip="Un-select the listed residues."/>
+                                <Button Grid.Column="2" Grid.Row="2" Margin="2,0,0,0" Command="{Binding SelectActiveResiduesCommand, Mode=OneTime}" CommandParameter="{Binding Text, ElementName=activeResiduesText}"
+                                        Content="+" Background="#FF494949" ToolTip="Select the listed residues."/>
+                            </Grid>
+                            <Button Margin="0 2 0 0" Background="#FF494949" Command="{Binding UpdateActiveResiduesCommand, Mode=OneWay}" ToolTip="Updates the molecule to reflect your changes."
+                                    >Update</Button>
+                            <TextBlock Margin="0 2 0 0">Water residues are ignored by default.</TextBlock>
+
+                            <Expander IsExpanded="False" Margin="-4, 0, 0, 0" Padding="0">
+                                <Expander.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" Grid.RowSpan="2"><Run Text="Residues"/></TextBlock>
+                                    </Grid>
+                                </Expander.Header>
+
+                                <ItemsControl ItemsSource="{Binding ActiveResidues, Mode=OneWay}" Margin="0 4 0 0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <DataTemplate.Resources>
+                                                <Storyboard x:Key="HighlightOn" Duration="0">
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                        <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                                <Storyboard x:Key="HighlightOff" Duration="0">
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                        <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </DataTemplate.Resources>
+                                            <Border x:Name="border" CornerRadius="2" Margin="0, 0, 4, 0">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsActive, Mode=OneWay}" Value="False">
+                                                                <Setter Property="Background" Value="Red" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <CheckBox IsChecked="{Binding IsActive, Mode=TwoWay}" Content="{Binding Mode=OneTime}" Margin="0,0,4,0" />
+                                            </Border>
+                                            <DataTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True" SourceName="border">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </Expander>
+                        </StackPanel>
+                    </Expander>
+                    <Expander IsExpanded="True" Margin="0, 0, 0, 0" MaxHeight="192">
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Cavity Parameters"/></TextBlock>
+                                <Button HorizontalAlignment="Right" Padding="6,0" Margin="10,0,0,0" Command="{Binding DefaultCommand, Mode=OneWay}" CommandParameter="cavity" Content="Default" Style="{DynamicResource HyperlinkButton}" ToolTip="Restores default parameters."/>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="5, 2" >
+                            <Grid Margin="0, 0, 0, 0" ToolTip="Used to determine the molecular surface. Changing the value removes computed pores and paths." Background="Transparent">
+                                <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Probe Radius:"/></TextBlock>
+                                <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding ProbeRadius, Mode=TwoWay}" MinValue="1.4" MaxValue="45"  />
+                            </Grid>
+
+                            <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="Used to determine the individual cavities.  Changing the value removes computed pores and paths.">
+                                <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Interior Threshold:"/></TextBlock>
+                                <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding InteriorThreshold, Mode=TwoWay}" MinValue="0.05" MaxValue="{Binding ProbeRadius, Mode=OneWay}" />
+                            </Grid>
+
+                            <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="Minimum depth of the cavity in angstroms.">
+                                <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Minimum Depth:"/></TextBlock>
+                                <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding MinDepthLength, Mode=TwoWay}" MinValue="1.0" MaxValue="100.0" />
+                            </Grid>
+
+                            <!--CheckBox Margin="0, 2, 0, 0" ToolTip="Ignore HET atoms when triangulating the molecule. These HET atoms can still be used as a starting point."
+                                      IsChecked="{Binding IgnoreHETAtoms, Mode=TwoWay}">Ignore HET Atoms</CheckBox-->
+                        </StackPanel>
+                    </Expander>
+
+                    <Expander IsExpanded="True" Margin="0,0, 0, 0">
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Tunnel Parameters"/></TextBlock>
+                                <Button HorizontalAlignment="Right" Padding="6,0" Margin="10,0,0,0" Command="{Binding DefaultCommand, Mode=OneWay}" CommandParameter="tunnels" Content="Default" Style="{DynamicResource HyperlinkButton}" ToolTip="Restores default parameters."/>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="5,2">
+                            <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="The minimum radius of a tunnel. Changing the value removes computed pores and paths.">
+                                <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Bottleneck Radius:"/></TextBlock>
+                                <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding BottleneckRadius, Mode=TwoWay}" MinValue="0.05" MaxValue="6" />
+                            </Grid>
+
+                            <Expander IsExpanded="False" Margin="-4, 0, 0, 0" Padding="0">
+                                <Expander.Header>
+                                    <Grid>
+                                        <TextBlock HorizontalAlignment="Left"><Run Text="Advanced"/></TextBlock>
+                                    </Grid>
+                                </Expander.Header>
+                                <StackPanel>
+                                    <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="Determines how far to search for a cavity. Changing the value removes computed pores and paths.">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Origin Radius:"/></TextBlock>
+                                        <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding OriginRadius, Mode=TwoWay}" MinValue="0.1" MaxValue="10" />
+                                    </Grid>
+                                    <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="The density of the tunnel exits on the molecular surface. Changing the value removes computed pores and paths.">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Surface Cover Radius:"/></TextBlock>
+                                        <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding SurfaceCoverRadius, Mode=TwoWay}" MinValue="5" MaxValue="25" />
+                                    </Grid>
+
+                                    <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="The maximum length of a tunnel segment narrower than then bottleneck radius. Changing the value removes computed pores and paths.">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Bottleneck Length:"/></TextBlock>
+                                        <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding BottleneckTolerance, Mode=TwoWay}" MinValue="0" MaxValue="5" />
+                                    </Grid>
+
+                                    <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="Determines when to remove remove tunnels when they are too similar. Changing the value removes computed pores and paths.">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Cutoff Ratio:"/></TextBlock>
+                                        <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding CutoffRatio, Mode=TwoWay}" MinValue="0.5" MaxValue="1" />
+                                    </Grid>
+
+                                    <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="Determines the minimum length of a tunnel.">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Min. Tunnel Length:"/></TextBlock>
+                                        <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding MinTunnelLength, Mode=TwoWay}" MinValue="0.0" MaxValue="100" />
+                                    </Grid>
+
+                                    <Grid Margin="0, 2, 0, 0" Background="Transparent" ToolTip="Determines the minimum length of a pore.">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"><Run Text="Min. Pore Length:"/></TextBlock>
+                                        <TunnelControls:ParameterSliderControl Margin="120 0 0 0" Value="{Binding MinPoreLength, Mode=TwoWay}" MinValue="0.0" MaxValue="100" />
+                                    </Grid>
+
+                                    <CheckBox Margin="0 4 0 0" IsChecked="{Binding FilterTunnelBoundaryLayers}" ToolTip="Determines whether to remove layers with boundary residues from the tunnel.">
+                                        Filter Boundary Layers
+                                    </CheckBox>
+
+                                    <CheckBox Margin="0 2 0 0" IsChecked="{Binding UseCustomExitsOnly}" ToolTip="If checked, only custom exits are used to find tunnels. Custom exits can be created by CTRL+Left-click on a cavity surface (green area). Does not affect currently computed tunnels.">
+                                        Use Custom Exits Only
+                                    </CheckBox>
+                                    <TextBlock Margin="0 2 0 0" ToolTip="Determines the weight function used to compute tunnels. Does not affect currently computed tunnels." Background="Transparent">
+                                    Weight Function:
+                                    </TextBlock>
+                                    <StackPanel Orientation="Horizontal" Margin="0 2 0 2">
+                                        <RadioButton IsChecked="{Binding WeightFunction, Converter={StaticResource enumToBoolConverter}, ConverterParameter=VoronoiScale}" ToolTip="Each graph edge has a factor given by the size of tetrahedron circumspheres." Margin="0 0 0 0">Voronoi Scale</RadioButton>
+                                        <RadioButton IsChecked="{Binding WeightFunction, Converter={StaticResource enumToBoolConverter}, ConverterParameter=LengthAndRadius}" ToolTip="Each graph edge is weighted using its length and the distance to the closes atom." Margin="6 0 0 0">Length + Radius</RadioButton>
+                                        <RadioButton IsChecked="{Binding WeightFunction, Converter={StaticResource enumToBoolConverter}, ConverterParameter=Length}" ToolTip="Each graph edge is weighted using its length."  Margin="6 0 0 0">Length</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Expander>
+
+                            <!--Grid Margin="0, 2, 0, 0" Visibility="Collapsed">
+                                <TextBlock Grid.Column="0" Grid.Row="0"><Run Text="Minimum Length:"/></TextBlock>
+                                <TextBlock Margin="120, 0, 0, 0" Text="{Binding Value, ElementName=minumumLengthSlider, StringFormat=0.00}" Grid.Column="1" VerticalAlignment="Center" />
+                                <Slider Margin="160, 0, 0, 0" x:Name="minumumLengthSlider" Grid.Column="2" Value="{Binding MinimumLength, Mode=TwoWay}" Minimum="0.1" Maximum="10" VerticalAlignment="Center" />
+                            </Grid>
+
+                            <Grid Margin="0, 2, 0, 0" Visibility="Collapsed">
+                                <TextBlock Grid.Column="0" Grid.Row="0"><Run Text="Control Points:"/></TextBlock>
+                                <TextBlock Margin="120, 0, 0, 0" Text="{Binding Value, ElementName=controlPointRatioSlider, StringFormat=0.00}" Grid.Column="1" VerticalAlignment="Center" />
+                                <Slider Margin="160, 0, 0, 0" x:Name="controlPointRatioSlider" Grid.Column="2" Value="{Binding ControlPointRatio, Mode=TwoWay}" Minimum="2" Maximum="8" VerticalAlignment="Center" />
+                            </Grid-->
+                        </StackPanel>
+                    </Expander>
+                    <!--Expander IsExpanded="True">
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Computation Parameters" /></TextBlock>
+                                <Button HorizontalAlignment="Right" Padding="6,0" Margin="10,0,0,0" Command="{Binding UpdateActiveResiduesCommand, Mode=OneWay}" Content="Update" Style="{DynamicResource HyperlinkButton}" 
+                                        ToolTip="Updates the molecule to reflect your changes." Visibility="Hidden" />
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical" Margin="5, 2">
+                            <CheckBox IsChecked="{Binding UseCustomExitsOnly}" ToolTip="If checked, only custom exits are used to find tunnels. Custom exits can be created by CTRL+Left-click on a cavity surface (green area). Does not affect currently computed tunnels.">
+                                Use Custom Exits Only
+                            </CheckBox>
+                            <TextBlock Margin="0 2 0 0" ToolTip="Determines the weight function used to compute tunnels. Does not affect currently computed tunnels." Background="Transparent">
+                                Weight Function:
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="0 2 0 2">
+                                <RadioButton IsChecked="{Binding WeightFunction, Converter={StaticResource enumToBoolConverter}, ConverterParameter=LengthAndRadius}" ToolTip="Each graph edge is weighted using its length and the distance to the closes atom.">Length + Radius</RadioButton>
+                                <RadioButton IsChecked="{Binding WeightFunction, Converter={StaticResource enumToBoolConverter}, ConverterParameter=Length}" ToolTip="Each graph edge is weighted using its length."  Margin="8 0 0 0">Length</RadioButton>
+                                <RadioButton IsChecked="{Binding WeightFunction, Converter={StaticResource enumToBoolConverter}, ConverterParameter=VoronoiScale}" ToolTip="Each graph edge has a factor given by the size of tetrahedron circumspheres." Margin="8 0 0 0">Voronoi Scale</RadioButton>
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander-->
+                    <Expander Margin="0,0,0,0" IsExpanded="True" Background="#FF727272">
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock><Run Text="Selection"/></TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Padding="6, 0" Command="{Binding FromResiduesCommand, Mode=OneWay}" Content="Compute Tunnels" Style="{DynamicResource HyperlinkButton}" >
+                                        <Button.ToolTip>
+                                            <TextBlock>
+                                                Computes tunnels from all user defined (green) start points.<LineBreak/>
+                                                All user start points are listed in the "Start Points" panel bellow.<LineBreak/>
+                                                <LineBreak />
+                                                If there are no user start points, consider changing the selection<LineBreak/>
+                                                or changing the parameters of the computation.
+                                            </TextBlock>
+                                        </Button.ToolTip>
+                                    </Button>
+                                    <Button Padding="6, 0" Command="{Binding ClearResidueSelectionCommand, Mode=OneTime}" Content="Clear" Style="{DynamicResource HyperlinkButton}" ToolTip="Clear residue selection."/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <TextBox IsReadOnly="True" BorderThickness="0" Background="{x:Null}" 
+                                 Padding="0"
+                                 Text="{Binding Residues.SelectionString, FallbackValue=No residue selected., Mode=OneWay}" Margin="3, 2" TextWrapping="Wrap" FontStyle="Italic" />
+                    </Expander>
+                    <Expander Header="Specific Point/Residue(s)">
+                        <Grid Margin="3, 2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="40" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" ToolTipService.ToolTip="Selects a residue closest to the point." VerticalAlignment="Center"><Run Text="Point:"/></TextBlock>
+                            <TextBox Grid.Column="1" Text="1.1 2.0 3.2" x:Name="pointText" />
+                            <Button Grid.Column="2" Margin="4, 0, 0, 0" Command="{Binding SelectClosestResidueCommand, Mode=OneTime}" CommandParameter="{Binding Text, ElementName=pointText}" Content="Go" Background="#FF494949">
+                                <Button.ToolTip>
+                                    <TextBlock>
+                                        Adds a starting point(s) as a 'green ball'.<LineBreak/>
+                                        If there is no ball created, there is no tetrahedron inside<LineBreak/>
+                                        a cavitywithin the Origin Radius distance. Tunnels from this<LineBreak/>
+                                        point can also\nbe computed using the Selection -> Compute Tunnels command.<LineBreak/>
+                                        This also clears residue selection.
+                                    </TextBlock>
+                                </Button.ToolTip>
+                            </Button>
+                            <TextBlock Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"><Run Text="Residues:"/></TextBlock>
+                            <TextBox Grid.Column="1" Text="LYS 123 A, GLU 123" Grid.Row="2" x:Name="residuesText" />
+                            <Button Grid.Column="2" Grid.Row="2" Margin="4,0,0,0" Command="{Binding SelectResiduesCommand, Mode=OneTime}" CommandParameter="{Binding Text, ElementName=residuesText}" Content="Go" Background="#FF494949" ToolTip="Select the listed residues."/>
+                        </Grid>
+                    </Expander>
+                    <!--Expander Header="Residues" /-->
+                    <Expander Margin="0,0, 0, 0">
+                        <Expander.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="Violet" Offset="0"/>
+                                <GradientStop Color="Violet" Offset="0.02"/>
+                                <GradientStop Color="#FF595959" Offset="0.02"/>
+                            </LinearGradientBrush>
+                        </Expander.Background>
+                        <Expander.Header>
+                            <TextBlock HorizontalAlignment="Left" ToolTip="Active Site Database Entries">
+                              		<Run Text="CSA Database (" /><Run Text="{Binding ElementName=CASData, Path=EntryCount,FallbackValue=0}" /><Run Text=")" /></TextBlock>
+                        </Expander.Header>
+                        <TunnelControls:CSADatabaseControl MinHeight="24" PdbStructure="{Binding Structure}" x:Name="CASData" />
+                    </Expander>
+                    <!--Border Margin="2,2,2,1" CornerRadius="3" Padding="23, 0, 4, 0">
+						<Border.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="Blue" Offset="0"/>
+                                <GradientStop Color="#FF595959" Offset="0.5"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left">
+                              		<Run Text="User Exits (" /><Run Text="{Binding Complex.SurfaceCavity.Openings.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                                <Button Margin="0" HorizontalAlignment="Right" Padding="5, 0" Command="{Binding ClearResidueSelectionCommand, Mode=OneTime}" Content="Clear" Style="{DynamicResource HyperlinkButton}" ToolTip="Clear residue selection."/>
+                            </Grid>
+                    </Border-->
+                    <!--Border Margin="2,2,2,1" CornerRadius="3" Padding="23, 0, 4, 0">
+						<Border.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="Orange" Offset="0"/>
+                                <GradientStop Color="#FF595959" Offset="0.5"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left">
+                              		<Run Text="User Origins (" /><Run Text="{Binding Complex.SurfaceCavity.Openings.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                                <Button Margin="0" HorizontalAlignment="Right" Padding="5, 0" Command="{Binding ClearResidueSelectionCommand, Mode=OneTime}" Content="Clear" Style="{DynamicResource HyperlinkButton}" ToolTip="Clear residue selection."/>
+                            </Grid>
+                    </Border-->
+                    <Expander IsExpanded="False" Margin="0,0,0,0" Visibility="Visible">
+                        <Expander.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="#FFD0D0D0" Offset="0"/>
+                                <GradientStop Color="#FFD0D0D0" Offset="0.02"/>
+                                <GradientStop Color="#FF595959" Offset="0.02"/>
+                            </LinearGradientBrush>
+                        </Expander.Background>
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Start Points (" /><Run Text="{Binding Origins.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Padding="6,0" Command="{Binding ClearUserOriginsCommand, Mode=OneWay}" Content="Clear" Style="{DynamicResource HyperlinkButton}" ToolTip="Removes all user added start points."/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <ListBox ItemsSource="{Binding Origins, Mode=OneWay}" BorderThickness="0" Style="{DynamicResource NoScrollListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Storyboard x:Key="HighlightOn" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                        <Storyboard x:Key="HighlightOff" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </DataTemplate.Resources>
+                                    <Border Padding="0,0,0,0" Background="Transparent">
+                                        <Grid>
+                                            <Button VerticalAlignment="Center" Padding="0" ToolTip="Remove the origin." 
+												Command="{Binding RemoveCommand, Mode=OneTime}" Style="{StaticResource HyperlinkButton}" 
+												Content="X" HorizontalAlignment="Left"
+												Visibility="{Binding CanRemove, Mode=OneTime, Converter={StaticResource boolVisibilityConverter}}" />
+                                            <Grid x:Name="grid" Margin="18, 0, 0, 0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock><Run 
+													Text="Cavity: "/><Run 
+													Text="{Binding Origin.Cavity.Id, Mode=OneWay}" /><Run Text=" ("/><Run 
+													Text="{Binding Origin.Type, Mode=OneWay}" /><Run 
+													Text=")"/></TextBlock>
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <CheckBox Margin="5 0 0 0" IsChecked="{Binding Origin.IsPinned, Mode=TwoWay}" Visibility="{Binding CanRemove, Mode=OneTime, Converter={StaticResource boolVisibilityConverter}}">Pinned</CheckBox>
+                                                    <CheckBox  Margin="5 0 0 0" IsChecked="{Binding Origin.IsSelected, Mode=TwoWay}">Active</CheckBox>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+
+                    <Border Background="#FF424242" Padding="6 4" Margin="0 1 0 0">
+                        <TextBlock FontWeight="Bold">Results</TextBlock>
+                    </Border>
+
+                    <Expander IsExpanded="False" Margin="0,0, 0, 0">
+                        <Expander.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="#FF8D2A2A" Offset="0"/>
+                                <GradientStop Color="#FF8D2A2A" Offset="0.02"/>
+                                <GradientStop Color="#FF595959" Offset="0.02"/>
+                            </LinearGradientBrush>
+                        </Expander.Background>
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"
+                                           ToolTip="Empty spaces inside the molecule that can contain tunnels/pores."
+                                           ><Run Text="Cavities (" /><Run Text="{Binding Complex.Cavities.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Padding="6,0" Command="{Binding SelectNoneCommand, Mode=OneWay}" CommandParameter="{Binding Complex.Cavities, Mode=OneWay}" Content="None" Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="6,0" Command="{Binding SelectAllCommand, Mode=OneWay}" CommandParameter="{Binding Complex.Cavities, Mode=OneWay}" Content="All" Style="{DynamicResource HyperlinkButton}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <ListBox ItemsSource="{Binding Channels, Mode=OneWay}" BorderThickness="0" Style="{DynamicResource NoScrollListBox}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <DataTemplate.Resources>
+                                            <Storyboard x:Key="HighlightOn" Duration="0">
+                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                    <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                                </BooleanAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                            <Storyboard x:Key="HighlightOff" Duration="0">
+                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                    <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                                </BooleanAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </DataTemplate.Resources>
+                                        <Grid x:Name="grid">
+                                            <CheckBox IsChecked="{Binding Cavity.IsSelected, Mode=TwoWay}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Width="25">
+                        								<Run Text="{Binding Cavity.Id, Mode=OneWay}" /><Run Text="."/>
+                                                    </TextBlock>
+                                                    <TextBlock Text="Depth: "/>
+                                                    <TextBlock Width="25">
+														<Run Text="{Binding Cavity.Depth, Mode=OneWay}" />
+                                                    </TextBlock>
+                                                    <TextBlock>	
+														<Run Text=" Volume: "/><Run Text="{Binding Cavity.Volume, Mode=OneWay, StringFormat=0.00}" /></TextBlock>
+                                                </StackPanel>
+                                            </CheckBox>
+                                            <Button Style="{StaticResource HyperlinkButton}" VerticalAlignment="Center" Command="{Binding ShowDetailsCommand, Mode=OneWay}" 
+                                        			HorizontalAlignment="Right" Content="Details" />
+                                        </Grid>
+                                        <DataTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Expander>
+                    <Expander IsExpanded="False" Margin="0,0, 0, 0">
+                        <Expander.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="#FF3B739F" Offset="0"/>
+                                <GradientStop Color="#FF3B739F" Offset="0.02"/>
+                                <GradientStop Color="#FF595959" Offset="0.02"/>
+                            </LinearGradientBrush>
+                        </Expander.Background>
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"
+                                           ToolTip="Empty space inside a molecule that is not accessible from its exterior."
+                                           ><Run Text="Interior Cavities (" /><Run Text="{Binding Complex.Voids.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Padding="6,0" Command="{Binding SelectNoneCommand, Mode=OneWay}" CommandParameter="{Binding Complex.Voids, Mode=OneWay}" Content="None" Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="6,0" Command="{Binding SelectAllCommand, Mode=OneWay}" CommandParameter="{Binding Complex.Voids, Mode=OneWay}" Content="All" Style="{DynamicResource HyperlinkButton}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <ListBox ItemsSource="{Binding Voids, Mode=OneWay}" BorderThickness="0" Style="{DynamicResource NoScrollListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Storyboard x:Key="HighlightOn" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                        <Storyboard x:Key="HighlightOff" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </DataTemplate.Resources>
+                                    <Grid x:Name="grid">
+                                        <CheckBox IsChecked="{Binding Cavity.IsSelected, Mode=TwoWay}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Width="15">
+                        								<Run Text="{Binding Cavity.Id, Mode=OneWay}" /><Run Text="."/>
+                                                </TextBlock>
+                                                <TextBlock>	
+														<Run Text=" Volume: "/><Run Text="{Binding Cavity.Volume, Mode=OneWay, StringFormat=0.00}" /></TextBlock>
+                                            </StackPanel>
+                                        </CheckBox>
+                                        <Button Style="{StaticResource HyperlinkButton}" VerticalAlignment="Center" Command="{Binding ShowDetailsCommand, Mode=OneWay}" 
+                                        			HorizontalAlignment="Right" Content="Details" />
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+                    <Expander IsExpanded="False" Margin="0,0,0,0">
+                        <Expander.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="#FF227622" Offset="0"/>
+                                <GradientStop Color="#FF227622" Offset="0.02"/>
+                                <GradientStop Color="#FF595959" Offset="0.02"/>
+                            </LinearGradientBrush>
+                        </Expander.Background>
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Tunnels (" /><Run Text="{Binding Tunnels.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Padding="6,0" ToolTip="Uses the 'deepest' tetrahedrons from each cavity as a starting place. This should compute all 'relevant' tunnels. Clears existing tunnels."
+									 Command="{Binding AutoTunnelsCommand, Mode=OneTime}" Content="Auto" Style="{DynamicResource HyperlinkButton}"/>
+                                    <Rectangle Width="1" Fill="White" Margin="0 3" />
+                                    <Button Padding="6,0" Command="{Binding ResetCommand, Mode=OneTime}" Content="Clear" ToolTip="Removes all tunnels." Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="6,0" Command="{Binding SelectNoneTunnelsCommand, Mode=OneWay}" Content="None" Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="6,0" Command="{Binding SelectAllTunnelsCommand, Mode=OneWay}" Content="All" Style="{DynamicResource HyperlinkButton}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <ListBox ItemsSource="{Binding Tunnels, Mode=OneWay}" BorderThickness="0" Style="{DynamicResource NoScrollListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Storyboard x:Key="HighlightOn" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                        <Storyboard x:Key="HighlightOff" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </DataTemplate.Resources>
+                                    <Border Padding="0,0,0,0" Background="Transparent">
+                                        <Grid>
+                                            <Button VerticalAlignment="Center" Padding="0" ToolTip="Remove the tunnel." Command="{Binding RemoveCommand, Mode=OneTime}" Style="{StaticResource HyperlinkButton}" Content="X" HorizontalAlignment="Left" />
+                                            <Grid x:Name="grid" Margin="18, 0, 0, 0">
+                                                <CheckBox IsChecked="{Binding Tunnel.IsSelected, Mode=TwoWay}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Width="15">
+                        								<Run Text="{Binding Tunnel.Id, Mode=OneWay}" /><Run Text="."/>
+                                                        </TextBlock>
+                                                        <TextBlock Text="Length: "/>
+                                                        <TextBlock Width="40">
+														<Run Text="{Binding Tunnel.Length, Mode=OneTime, StringFormat=0.00}" />
+                                                        </TextBlock>
+                                                        <TextBlock>	
+														<Run Text=" Cavity: "/><Run Text="{Binding Tunnel.Cavity.Id, Mode=OneTime}" /></TextBlock>
+                                                    </StackPanel>
+                                                </CheckBox>
+                                                <Button Style="{StaticResource HyperlinkButton}" VerticalAlignment="Center" Command="{Binding ShowTunnelDetailsCommand, Mode=OneWay}" 
+                                        			HorizontalAlignment="Right" Margin="150,0,0,0" Content="Details" />
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+
+                    <Expander IsExpanded="False" Margin="0,0,0,0">
+                        <Expander.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="#FFCEC137" Offset="0"/>
+                                <GradientStop Color="#FFCEC137" Offset="0.02"/>
+                                <GradientStop Color="#FF595959" Offset="0.02"/>
+                            </LinearGradientBrush>
+                        </Expander.Background>
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left" ToolTip="Channels created by merging two tunnels."><Run Text="Pores (" /><Run Text="{Binding Pores.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Padding="2,0" ToolTip="Computes pores from selected tunnels."
+									 Command="{Binding PorifyCommand, Mode=OneTime}" Content="Find" Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="2,0" ToolTip="Computes pores from custom tunnel exits (Ctrl+Click on molecular surface)."
+									 Command="{Binding ComputeUserPoresCommand, Mode=OneTime}" Content="User" Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="2,0,6,0" ToolTip="Computes pores from exits in all cavities."
+									 Command="{Binding ComputePoresCommand, Mode=OneTime}" Content="Auto" Style="{DynamicResource HyperlinkButton}"/>
+                                    <Rectangle Width="1" Fill="White" Margin="0 3" />
+                                    <Button Padding="6,0" Command="{Binding RemovePoresCommand, Mode=OneTime}" Content="Clear" ToolTip="Removes all pores." Style="{DynamicResource HyperlinkButton}"/>
+                                    <!--Rectangle Width="1" Fill="White" Margin="0 3 3 0" /-->
+                                    <Button Padding="6,0" Command="{Binding SelectNonePoresCommand, Mode=OneWay}" Content="None" Style="{DynamicResource HyperlinkButton}" ToolTip="Select none" />
+                                    <Button Padding="6,0" Command="{Binding SelectAllPoresCommand, Mode=OneWay}" Content="All" Style="{DynamicResource HyperlinkButton}" ToolTip="Select all" />
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <ListBox ItemsSource="{Binding Pores, Mode=OneWay}" BorderThickness="0" Style="{DynamicResource NoScrollListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Storyboard x:Key="HighlightOn" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                        <Storyboard x:Key="HighlightOff" Duration="0">
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </DataTemplate.Resources>
+                                    <Border Padding="0,0,0,0" Background="Transparent">
+                                        <Grid>
+                                            <Button VerticalAlignment="Center" Padding="0" ToolTip="Remove the tunnel." Command="{Binding RemoveCommand, Mode=OneTime}" Style="{StaticResource HyperlinkButton}" Content="X" HorizontalAlignment="Left" />
+                                            <Grid x:Name="grid" Margin="18, 0, 0, 0">
+                                                <CheckBox IsChecked="{Binding Tunnel.IsSelected, Mode=TwoWay}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Width="15">
+                        								<Run Text="{Binding Tunnel.Id, Mode=OneWay}" /><Run Text="."/>
+                                                        </TextBlock>
+                                                        <TextBlock Text="Length: "/>
+                                                        <TextBlock Width="40">
+														<Run Text="{Binding Tunnel.Length, Mode=OneTime, StringFormat=0.00}" />
+                                                        </TextBlock>
+                                                        <TextBlock>	
+														<Run Text=" Cavity: "/><Run Text="{Binding Tunnel.Cavity.Id, Mode=OneTime}" /></TextBlock>
+                                                    </StackPanel>
+                                                </CheckBox>
+                                                <Button Style="{StaticResource HyperlinkButton}" VerticalAlignment="Center" Command="{Binding ShowTunnelDetailsCommand, Mode=OneWay}" 
+                                        			HorizontalAlignment="Right" Margin="150,0,0,0" Content="Details" />
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+
+                    <Expander IsExpanded="False" Margin="0,0,0,0">
+                        <Expander.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" MappingMode="RelativeToBoundingBox" StartPoint="1,0.5">
+                                <GradientStop Color="#FF19E7E3" Offset="0"/>
+                                <GradientStop Color="#FF19E7E3" Offset="0.02"/>
+                                <GradientStop Color="#FF595959" Offset="0.02"/>
+                            </LinearGradientBrush>
+                        </Expander.Background>
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left" ToolTip="Channels computed from any two points within a protein."><Run Text="Paths (" /><Run Text="{Binding Paths.Count, FallbackValue=0, Mode=OneWay}" /><Run Text=")" /><Run Text=" beta" FontStyle="Italic" /></TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Padding="6,0" Command="{Binding RemovePathsCommand, Mode=OneTime}" Content="Clear" ToolTip="Removes all paths." Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="6,0" Command="{Binding SelectNonePathsCommand, Mode=OneWay}" Content="None" ToolTip="De-select all paths." Style="{DynamicResource HyperlinkButton}"/>
+                                    <Button Padding="6,0" Command="{Binding SelectAllPathsCommand, Mode=OneWay}" Content="All"   ToolTip="Select all paths." Style="{DynamicResource HyperlinkButton}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel>
+                            <Grid Margin="5 2 3 2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" ToolTipService.ToolTip="Residue list or 3D point." VerticalAlignment="Center"><Run Text="Start:"/></TextBlock>
+                                <TextBox Grid.Column="1" Text="{Binding PathStartText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock>
+	                            			A 3D point given by 3 numbers, for examle:<LineBreak />
+											1.0 2.1 3.25<LineBreak />
+											A comma separated list of residue identifiers (numbers and chains are enough), for example:<LineBreak />
+											205 A, 308 A<LineBreak />
+											To specify ' ' chain, enter only the number.
+                                        </TextBlock>
+                                    </ToolTipService.ToolTip>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="2" ToolTip="Residue list or 3D point." VerticalAlignment="Center"><Run Text="End:"/></TextBlock>
+                                <TextBox Grid.Column="1" Text="{Binding PathEndText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2">
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock>
+	                            			A 3D point given by 3 numbers, for examle:<LineBreak />
+											1.0 2.1 3.25<LineBreak />
+											A comma separated list of residue identifiers (numbers and chains are enough), for example:<LineBreak />
+											205 A, 308 A<LineBreak />
+											To specify ' ' chain, enter only the number.
+                                        </TextBlock>
+                                    </ToolTipService.ToolTip>
+                                </TextBox>
+                            </Grid>
+
+                            <Button Margin="5 0 3 2" Command="{Binding ComputePathCommand,Mode=OneTime}" CommandParameter="tunnels" Background="#FF494949" ToolTip="Export to PyMOL script.">
+                                Compute
+                            </Button>
+
+                            <ListBox ItemsSource="{Binding Paths, Mode=OneWay}" BorderThickness="0" Style="{DynamicResource NoScrollListBox}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <DataTemplate.Resources>
+                                            <Storyboard x:Key="HighlightOn" Duration="0">
+                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                    <DiscreteBooleanKeyFrame Value="True" KeyTime="0" />
+                                                </BooleanAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                            <Storyboard x:Key="HighlightOff" Duration="0">
+                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="DataContext.IsHighlighted">
+                                                    <DiscreteBooleanKeyFrame Value="False" KeyTime="0" />
+                                                </BooleanAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </DataTemplate.Resources>
+                                        <Border Padding="0,0,0,0" Background="Transparent">
+                                            <Grid>
+                                                <Button VerticalAlignment="Center" Padding="0" ToolTip="Remove the tunnel." Command="{Binding RemoveCommand, Mode=OneTime}" Style="{StaticResource HyperlinkButton}" Content="X" HorizontalAlignment="Left" />
+                                                <Grid x:Name="grid" Margin="18, 0, 0, 0">
+                                                    <CheckBox IsChecked="{Binding Tunnel.IsSelected, Mode=TwoWay}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Width="15">
+	                        								<Run Text="{Binding Tunnel.Id, Mode=OneWay}" /><Run Text="."/>
+                                                            </TextBlock>
+                                                            <TextBlock Text="Length: "/>
+                                                            <TextBlock Width="40">
+															<Run Text="{Binding Tunnel.Length, Mode=OneTime, StringFormat=0.00}" />
+                                                            </TextBlock>
+                                                        </StackPanel>
+                                                    </CheckBox>
+                                                    <Button Style="{StaticResource HyperlinkButton}" VerticalAlignment="Center" Command="{Binding ShowTunnelDetailsCommand, Mode=OneWay}" 
+	                                        			HorizontalAlignment="Right" Margin="150,0,0,0" Content="Details" />
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                        <DataTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True" SourceName="grid">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard Storyboard="{StaticResource HighlightOn}"/>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard Storyboard="{StaticResource HighlightOff}"/>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Expander>
+
+                    <Expander IsExpanded="False" x:Name="exportPanel">
+                        <Expander.Header>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Left"><Run Text="Export"/></TextBlock>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="5 2">
+                            <WrapPanel>
+                                <TextBlock FontWeight="Bold" Margin="0 0 4 0" Width="95">PyMOL</TextBlock>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToPyMolCommand,Mode=OneTime}" CommandParameter="Tunnel" Background="#FF494949" ToolTip="Export to PyMOL script.">Tunnels</Button>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToPyMolCommand,Mode=OneTime}" CommandParameter="Pore" Background="#FF494949" ToolTip="Export to PyMOL script.">Pores</Button>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToPyMolCommand,Mode=OneTime}" CommandParameter="Path" Background="#FF494949" ToolTip="Export to PyMOL script.">Paths</Button>
+                            </WrapPanel>
+                            <WrapPanel Margin="0 2 0 0">
+                                <TextBlock FontWeight="Bold" Margin="0 0 4 0" Width="95">PDB</TextBlock>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToPdbCommand,Mode=OneTime}" CommandParameter="Tunnel" Background="#FF494949" ToolTip="Export to PDB file with all tunnels.">Tunnels</Button>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToPdbCommand,Mode=OneTime}" CommandParameter="Pore" Background="#FF494949" ToolTip="Export to PDB file with all pores.">Pores</Button>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToPdbCommand,Mode=OneTime}" CommandParameter="Path" Background="#FF494949" ToolTip="Export to PDB file with all paths.">Paths</Button>
+                            </WrapPanel>
+                            <WrapPanel Margin="0 2 0 0">
+                                <TextBlock FontWeight="Bold" Margin="0 0 4 0" Width="95">PDB + molecule</TextBlock>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToMacroPdbCommand,Mode=OneTime}" CommandParameter="Tunnel" Background="#FF494949" ToolTip="Export to PDB file with the tunnels.">Tunnels</Button>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToMacroPdbCommand,Mode=OneTime}" CommandParameter="Pore" Background="#FF494949" ToolTip="Export to PDB file with the pores.">Pores</Button>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToMacroPdbCommand,Mode=OneTime}" CommandParameter="Path" Background="#FF494949" ToolTip="Export to PDB file with the paths.">Paths</Button>
+                            </WrapPanel>
+                            <WrapPanel Margin="0 2 0 0">
+                                <TextBlock FontWeight="Bold" Margin="0 0 4 0" Width="95">XML</TextBlock>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToXMLCommand,Mode=OneTime}" CommandParameter="Tunnel" Background="#FF494949" ToolTip="Export to XML file with the selected tunnels/pores/...">Tunnels/Pores/Paths</Button>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding ExportToXMLCommand,Mode=OneTime}" CommandParameter="Cavity" Background="#FF494949" ToolTip="Export to XML file with the cavities and voids.">Cavities</Button>
+                            </WrapPanel>
+                            <WrapPanel Margin="0 2 0 0">
+                                <TextBlock FontWeight="Bold" Margin="0 0 4 0" Width="95">Settings</TextBlock>
+                                <Button Padding="4 0" Margin="0 0 2 0" Command="{Binding CopyXMLSettingsCommand,Mode=OneTime}" Background="#FF494949" ToolTip="Copy XML of the current computation parameters (including non-active residues).">Copy XML</Button>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

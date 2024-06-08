@@ -1,0 +1,442 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebChemistry.SiteBinder</name>
+    </assembly>
+    <members>
+        <member name="M:WebChemistry.SiteBinder.SiteBinderAdapter.Superimpose(System.Collections.Generic.IEnumerable{WebChemistry.Framework.Core.IStructure},System.Boolean,WebChemistry.SiteBinder.GroupingLevel)">
+            <summary>
+            Superimposes the structures in place.
+            </summary>
+            <param name="motives"></param>
+            <param name="allowReflection"></param>
+            <param name="groupingLevel"></param>
+            <returns>RMSD</returns>
+        </member>
+        <member name="T:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility">
+            <summary>
+            Utility class that maintains a small table of prime numbers and provides
+            simple implementations of Prime Factorization algorithms.  
+            This is a quick and dirty utility class to support calculations of permutation
+            sets with indexes under 2^31.
+            The prime table contains all primes up to Sqrt(2^31) which are all of the primes
+            requires to factorize any Int32 positive integer.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.#ctor">
+            <summary>
+            Utility class, no instances allowed.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.Factor(System.Int32)">
+            <summary>
+            Performs a prime factorization of a given integer using the table of primes in PrimeTable.
+            Since this will only factor Int32 sized integers, a simple list of factors is returned instead
+            of the more scalable, but more difficult to consume, list of primes and associated exponents.
+            </summary>
+            <param name="i">The number to factorize, must be positive.</param>
+            <returns>A simple list of factors.</returns>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.MultiplyPrimeFactors(System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Given two integers expressed as a list of prime factors, multiplies these numbers
+            together and returns an integer also expressed as a set of prime factors.
+            This allows multiplication to overflow well beyond a Int64 if necessary.  
+            </summary>
+            <param name="lhs">Left Hand Side argument, expressed as list of prime factors.</param>
+            <param name="rhs">Right Hand Side argument, expressed as list of prime factors.</param>
+            <returns>Product, expressed as list of prime factors.</returns>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.DividePrimeFactors(System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Given two integers expressed as a list of prime factors, divides these numbers
+            and returns an integer also expressed as a set of prime factors.
+            If the result is not a integer, then the result is undefined.  That is, 11 / 5
+            when divided by this function will not yield a correct result.
+            As such, this function is ONLY useful for division with combinatorial results where 
+            the result is known to be an integer AND the division occurs as the last operation(s).
+            </summary>
+            <param name="numerator">Numerator argument, expressed as list of prime factors.</param>
+            <param name="denominator">Denominator argument, expressed as list of prime factors.</param>
+            <returns>Resultant, expressed as list of prime factors.</returns>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.EvaluatePrimeFactors(System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Given a list of prime factors returns the long representation.
+            </summary>
+            <param name="value">Integer, expressed as list of prime factors.</param>
+            <returns>Standard long representation.</returns>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.#cctor">
+            <summary>
+            Static initializer, set up prime table.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.CalculatePrimes">
+            <summary>
+            Calculate all primes up to Sqrt(2^32) = 2^16.  
+            This table will be large enough for all factorizations for Int32's.
+            Small tables are best built using the Sieve Of Eratosthenes,
+            Reference: http://primes.utm.edu/glossary/page.php?sort=SieveOfEratosthenes
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.SmallPrimeUtility.PrimeTable">
+            <summary>
+            A List of all primes from 2 to 2^16.
+            </summary>
+        </member>
+        <member name="T:SiteBinder.Core.Atoms.PDBAtom">
+            <summary>
+            This class represents ATOM and HETATM from Coordinate File Description (PDB Format).
+            More details found at http://deposit.rcsb.org/adit/docs/pdb_atom_format.html.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Core.Structures.ProteinFragment.Select(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}})">
+            <summary>
+            
+            </summary>
+            <param name="names">
+            Contains names in following format:
+            CYS: {{SG},{SG, CB}} 
+            HIS: {{NE1}, {ND1}}
+            ZN : {{ZN}}
+            selects:
+            SG on 1st CYS, SG and CB on 2nd CYS
+            NE1 on 1st HIS, ND1 on 2nd HIS
+            ZN on ZN
+            
+            Assumes the number of sequences in the list corresponding to each ResidueName is the same 
+            as the number of the chains in the loaded motive.
+            </param>
+        </member>
+        <member name="T:SiteBinder.Helpers.Combinatorics.Permutations`1">
+            <summary>
+            Permutations defines a meta-collection, typically a list of lists, of all
+            possible orderings of a set of values.  This list is enumerable and allows
+            the scanning of all possible permutations using a simple foreach() loop.
+            The MetaCollectionType parameter of the constructor allows for the creation of
+            two types of sets,  those with and without repetition in the output set when 
+            presented with repetition in the input set.
+            </summary>
+            <remarks>
+            When given a input collect {A A B}, the following sets are generated:
+            MetaCollectionType.WithRepetition =>
+            {A A B}, {A B A}, {A A B}, {A B A}, {B A A}, {B A A}
+            MetaCollectionType.WithoutRepetition =>
+            {A A B}, {A B A}, {B A A}
+            
+            When generating non-repetition sets, ordering is based on the lexicographic 
+            ordering of the lists based on the provided Comparer.  
+            If no comparer is provided, then T must be IComparable on T.
+            
+            When generating repetition sets, no comparisions are performed and therefore
+            no comparer is required and T does not need to be IComparable.
+            </remarks>
+            <typeparam name="T">The type of the values within the list.</typeparam>
+        </member>
+        <member name="T:SiteBinder.Helpers.Combinatorics.IMetaCollection`1">
+            <summary>
+            Interface for Permutations, Combinations and any other classes that present
+            a collection of collections based on an input collection.  The enumerators that 
+            this class inherits defines the mechanism for enumerating through the collections.  
+            </summary>
+            <typeparam name="T">The of the elements in the collection, not the type of the collection.</typeparam>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.IMetaCollection`1.Count">
+            <summary>
+            The count of items in the collection.  This is not inherited from
+            ICollection since this meta-collection cannot be extended by users.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.IMetaCollection`1.Type">
+            <summary>
+            The type of the meta-collection, determining how the collections are 
+            determined from the inputs.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.IMetaCollection`1.UpperIndex">
+            <summary>
+            The upper index of the meta-collection, which is the size of the input collection.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.IMetaCollection`1.LowerIndex">
+            <summary>
+            The lower index of the meta-collection, which is the size of each output collection.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.#ctor">
+            <summary>
+            No default constructor, must at least provided a list of values.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>
+            Create a permutation set from the provided list of values.  
+            The values (T) must implement IComparable.  
+            If T does not implement IComparable use a constructor with an explict IComparer.
+            The repetition type defaults to MetaCollectionType.WithholdRepetitionSets
+            </summary>
+            <param name="values">List of values to permute.</param>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.#ctor(System.Collections.Generic.IList{`0},SiteBinder.Helpers.Combinatorics.GenerateOption)">
+            <summary>
+            Create a permutation set from the provided list of values.  
+            If type is MetaCollectionType.WithholdRepetitionSets, then values (T) must implement IComparable.  
+            If T does not implement IComparable use a constructor with an explict IComparer.
+            </summary>
+            <param name="values">List of values to permute.</param>
+            <param name="type">The type of permutation set to calculate.</param>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.#ctor(System.Collections.Generic.IList{`0},System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Create a permutation set from the provided list of values.  
+            The values will be compared using the supplied IComparer.
+            The repetition type defaults to MetaCollectionType.WithholdRepetitionSets
+            </summary>
+            <param name="values">List of values to permute.</param>
+            <param name="comparer">Comparer used for defining the lexigraphic order.</param>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.GetEnumerator">
+            <summary>
+            Gets an enumerator for collecting the list of permutations.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.System#Collections#Generic#IEnumerable{System#Collections#Generic#IList{T}}#GetEnumerator">
+            <summary>
+            Gets an enumerator for collecting the list of permutations.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.Initialize(System.Collections.Generic.IList{`0},SiteBinder.Helpers.Combinatorics.GenerateOption,System.Collections.Generic.IComparer{`0})">
+             <summary>
+             Common intializer used by the multiple flavors of constructors.
+             </summary>
+             <remarks>
+             Copies information provided and then creates a parellel int array of lexicographic
+             orders that will be used for the actual permutation algorithm.  
+             The input array is first sorted as required for WithoutRepetition and always just for consistency.
+             This array is constructed one of two way depending on the type of the collection.
+            
+             When type is MetaCollectionType.WithRepetition, then all N! permutations are returned
+             and the lexicographic orders are simply generated as 1, 2, ... N.  
+             E.g.
+             Input array:          {A A B C D E E}
+             Lexicograhpic Orders: {1 2 3 4 5 6 7}
+             
+             When type is MetaCollectionType.WithoutRepetition, then fewer are generated, with each
+             identical element in the input array not repeated.  The lexicographic sort algorithm
+             handles this natively as long as the repetition is repeated.
+             E.g.
+             Input array:          {A A B C D E E}
+             Lexicograhpic Orders: {1 1 2 3 4 5 5}
+             </remarks>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.GetCount">
+            <summary>
+            Calculates the total number of permutations that will be returned.  
+            As this can grow very large, extra effort is taken to avoid overflowing the accumulator.  
+            While the algorithm looks complex, it really is just collecting numerator and denominator terms
+            and cancelling out all of the denominator terms before taking the product of the numerator terms.  
+            </summary>
+            <returns>The number of permutations.</returns>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.myValues">
+            <summary>
+            A list of T that represents the order of elements as originally provided, used for Reset.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.myLexicographicOrders">
+            <summary>
+            Parrellel array of integers that represent the location of items in the myValues array.
+            This is generated at Initialization and is used as a performance speed up rather that
+            comparing T each time, much faster to let the CLR optimize around integers.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.myCount">
+            <summary>
+            The count of all permutations.  Calculated at Initialization and returned by Count property.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.myMetaCollectionType">
+            <summary>
+            The type of Permutations that this was intialized from.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.Permutations`1.Count">
+            <summary>
+            The count of all permutations that will be returned.
+            If type is MetaCollectionType.WithholdGeneratedSets, then this does not double count permutations with multiple identical values.  
+            I.e. count of permutations of "AAB" will be 3 instead of 6.  
+            If type is MetaCollectionType.WithRepetition, then this is all combinations and is therefore N!, where N is the number of values.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.Permutations`1.Type">
+            <summary>
+            The type of Permutations set that is generated.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.Permutations`1.UpperIndex">
+            <summary>
+            The upper index of the meta-collection, equal to the number of items in the initial set.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.Permutations`1.LowerIndex">
+            <summary>
+            The lower index of the meta-collection, equal to the number of items returned each iteration.
+            For Permutation, this is always equal to the UpperIndex.
+            </summary>
+        </member>
+        <member name="T:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator">
+            <summary>
+            The enumerator that enumerates each meta-collection of the enclosing Permutations class.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.#ctor(SiteBinder.Helpers.Combinatorics.Permutations{`0})">
+            <summary>
+            Construct a enumerator with the parent object.
+            </summary>
+            <param name="source">The source Permutations object.</param>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.Reset">
+            <summary>
+            Resets the permutations enumerator to the first permutation.  
+            This will be the first lexicographically order permutation.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.MoveNext">
+            <summary>
+            Advances to the next permutation.
+            </summary>
+            <returns>True if successfully moved to next permutation, False if no more permutations exist.</returns>
+            <remarks>
+            Continuation was tried (i.e. yield return) by was not nearly as efficient.
+            Performance is further increased by using value types and removing generics, that is, the LexicographicOrder parellel array.
+            This is a issue with the .NET CLR not optimizing as well as it could in this infrequently used scenario.
+            </remarks>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.Dispose">
+            <summary>
+            Cleans up non-managed resources, of which there are none used here.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.NextPermutation">
+            <summary>
+            Calculates the next lexicographical permutation of the set.
+            This is a permutation with repetition where values that compare as equal will not 
+            swap positions to create a new permutation.
+            http://www.cut-the-knot.org/do_you_know/AllPerm.shtml
+            E. W. Dijkstra, A Discipline of Programming, Prentice-Hall, 1997  
+            </summary>
+            <returns>True if a new permutation has been returned, false if not.</returns>
+            <remarks>
+            This uses the integers of the lexicographical order of the values so that any
+            comparison of values are only performed during initialization. 
+            </remarks>
+        </member>
+        <member name="M:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.Swap(System.Int32,System.Int32)">
+            <summary>
+            Helper function for swapping two elements within the internal collection.
+            This swaps both the lexicographical order and the values, maintaining the parallel array.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.myTemp">
+            <summary>
+            Single instance of swap variable for T, small performance improvement over declaring in Swap function scope.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.myKviTemp">
+            <summary>
+            Single instance of swap variable for int, small performance improvement over declaring in Swap function scope.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.myPosition">
+            <summary>
+            Flag indicating the position of the enumerator.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.myLexicographicalOrders">
+            <summary>
+            Parrellel array of integers that represent the location of items in the myValues array.
+            This is generated at Initialization and is used as a performance speed up rather that
+            comparing T each time, much faster to let the CLR optimize around integers.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.myValues">
+            <summary>
+            The list of values that are current to the enumerator.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.myParent">
+            <summary>
+            The set of permuations that this enumerator enumerates.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.Current">
+            <summary>
+            The current permutation.
+            </summary>
+        </member>
+        <member name="P:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.System#Collections#Generic#IEnumerator{System#Collections#Generic#IList{T}}#Current">
+            <summary>
+            The current permutation.
+            </summary>
+        </member>
+        <member name="T:SiteBinder.Helpers.Combinatorics.Permutations`1.Enumerator.Position">
+            <summary>
+            Internal position type for tracking enumertor position.
+            </summary>
+        </member>
+        <member name="T:SiteBinder.Helpers.Combinatorics.Permutations`1.SelfComparer`1">
+            <summary>
+            Inner class that wraps an IComparer around a type T when it is IComparable
+            </summary>
+        </member>
+        <member name="T:SiteBinder.Core.Structures.BondLengths">
+            <summary>
+            A helper class containing somewhat arbitrarily modified bond lengths from http://www.science.uwaterloo.ca/~cchieh/cact/c120/bondel.html.
+            This class is used by the rendering procedures.
+            </summary>
+        </member>
+        <member name="T:SiteBinder.Helpers.Combinatorics.GenerateOption">
+            <summary>
+            Indicates whether a Permutation, Combination or Variation meta-collections
+            generate repetition sets.  
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.GenerateOption.WithoutRepetition">
+            <summary>
+            Do not generate additional sets, typical implementation.
+            </summary>
+        </member>
+        <member name="F:SiteBinder.Helpers.Combinatorics.GenerateOption.WithRepetition">
+            <summary>
+            Generate additional sets even if repetition is required.
+            </summary>
+        </member>
+        <member name="T:SiteBinder.Core.Superimposing.ProteinGrouping">
+            <summary>
+            This class is an essential part of the matching/aligning algorithm.
+            It contains procedures for determining the optimal grouping of sequences that are to be aligned.
+            </summary>
+        </member>
+        <member name="M:SiteBinder.Core.Superimposing.ProteinGrouping.ByResidueNameAndResidueSequenceNumber(System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{SiteBinder.Core.Atoms.PDBAtom}})">
+            <summary>
+            
+            </summary>
+            <param name="atoms">Groupign returned by GroupingType function.</param>
+        </member>
+        <member name="M:SiteBinder.Core.Superimposing.ProteinGrouping.ByResidueSequenceNumber(System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{SiteBinder.Core.Atoms.PDBAtom}})">
+            <summary>
+            
+            </summary>
+            <param name="atoms">Groupign returned by GroupingType function.</param>
+        </member>
+        <member name="M:SiteBinder.Core.Superimposing.ProteinGrouping.ByElementSymbol(System.Collections.Generic.IEnumerable{SiteBinder.Core.Atoms.PDBAtom})">
+            <summary>
+            
+            </summary>
+            <param name="atoms">Groupign returned by GroupingType function.</param>
+        </member>
+    </members>
+</doc>

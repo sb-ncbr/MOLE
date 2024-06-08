@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tunnels>
+  <Input>./tests/1TQN.pdb</Input>
+  <WorkingDirectory>./test_pores/</WorkingDirectory>
+  <Params>
+    <Cavity ProbeRadius="3" InteriorThreshold="1.25" />
+    <Tunnel SurfaceCoverRadius="10" OriginRadius="5" WeightFunction="VoronoiScale" />
+  </Params>
+  <Export>
+    <Formats Mesh="1" PyMol="1" CSV="1" PDBProfile="1" />
+    <Types Cavities="1" PoresUser="0" PoresMerged="1" PoresAuto="1" />
+    <Mesh Density="1.33" Compress="1" />
+    <PyMol PDBId="1TQN" SurfaceType="Surface"  />
+  </Export>
+  <Origins>
+    <Origin>
+      <Residue Name="GLU" Chain="A" SequenceNumber="308" />
+      <Residue Name="THR" Chain="A" SequenceNumber="309" />
+    </Origin>
+  </Origins>
+</Tunnels>

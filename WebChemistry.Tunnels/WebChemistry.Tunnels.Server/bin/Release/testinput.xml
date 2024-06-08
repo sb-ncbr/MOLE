@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--<Tunnels>
+  <Input>i:/1TQN.pdb</Input>
+  <WorkingDirectory>i:/test/tunnels/tunnelsoutput/</WorkingDirectory>
+  <Params ProbeRadius="3" InteriorThreshold="1.25" SurfaceCoverRadius="10" OriginRadius="5" />
+  <Export Mesh="1" MeshGz="1" Cavities="1" PoresAuto="1" MeshDensity="1.33" PyMol="1" PDB="1" PDBId="1TQN" ProfileCSV="1" />
+  <CustomVdw>
+    <Radius Element="H" Value="1" />
+  </CustomVdw>
+  <NonActiveResidues>
+    <Residue Name="HEM" Chain="A" SequenceNumber="508" />
+  </NonActiveResidues>
+  <CustomExits>
+    <Exit>
+      <Point X="-27.435" Y="0.017" Z="-11.724" />
+    </Exit>
+  </CustomExits>
+  <Origins Auto="0">
+    --><!--Point x="0" y="1" z="2" />
+    <Point x="0" y="1" z="1" /--><!--
+    --><!--ExactPoint x="0" y="1" z="1" /--><!--
+    <Origin>
+      <Residue Name="GLU" Chain="A" SequenceNumber="308" />
+      <Residue Name="THR" Chain="A" SequenceNumber="309" />
+    </Origin>
+  </Origins>
+  <Paths>
+    <Path>
+      <Start>
+        <Residue Name="GLU" Chain="A" SequenceNumber="308" />
+        <Residue Name="THR" Chain="A" SequenceNumber="309" />
+      </Start>
+      <End>
+        <Point X="-27.435" Y="0.017" Z="-11.724" />
+      </End>
+    </Path>
+  </Paths>
+</Tunnels>-->
+<!--Tunnels>
+  <Input>i:/1TQN.pdb</Input>
+  <ChargeSources>
+    <RandomGrid Name="test" />
+    <AtomValues Name="test" Source="C:/Projects/WebChemistry_Mole2_core2/Desktop/TunnelsServer/tests/testcharges.wprop" Method="NearestValue" />
+  </ChargeSources>
+  <WorkingDirectory>i:/test/tunnels/tunnelsoutput/</WorkingDirectory>
+  <Params>
+    <Cavity ProbeRadius="3" InteriorThreshold="1.25" />
+    <Tunnel SurfaceCoverRadius="10" OriginRadius="5" />
+  </Params>
+  <Export>
+    <Formats Mesh="1" PyMol="1" CSV="1" PDBStructure="1" />
+    <Types Cavities="1" Tunnels="1" />
+    <Mesh Density="1.33" Compress="1" />
+    <PyMol PDBId="1TQN" SurfaceType="Surface"  />
+  </Export>
+  <Origins Auto="0">
+    <Origin>
+      <Residue Chain="A" SequenceNumber="308" />
+      <Residue Chain="A" SequenceNumber="309" />
+    </Origin>
+  </Origins>
+</Tunnels-->
+
+<Tunnels>
+  <Input>i:/1tqn.pdb</Input>
+  <WorkingDirectory>i:/test/mole/1tqn/</WorkingDirectory>
+  <Params>
+    <Cavity ProbeRadius="6.0" InteriorThreshold="1.25" MinDepth="10" MinDepthLength="10" />
+    <Tunnel SurfaceCoverRadius="10" OriginRadius="5" AutoOriginCoverRadius="10" MinTunnelLength="5" FilterBoundaryLayers="1" />
+  </Params>
+  <Export>
+    <Formats PyMol="1" />
+    <Types Cavities="1" Tunnels="1" />
+    <Mesh Density="1.33" Compress="1" />
+    <PyMol PDBId="1JJ2" SurfaceType="Surface" ChargePalette="RedWhiteBlue" />
+  </Export>
+  <Origins Auto="1" />
+</Tunnels>

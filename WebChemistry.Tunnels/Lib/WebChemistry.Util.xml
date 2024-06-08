@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebChemistry.Util</name>
+    </assembly>
+    <members>
+        <member name="T:WebChemistry.Util.HeapDirection">
+            <summary>
+            Specifies the order in which a Heap will Dequeue items.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Util.HeapDirection.Increasing">
+            <summary>
+            Items are Dequeued in Increasing order from least to greatest.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Util.HeapDirection.Decreasing">
+            <summary>
+            Items are Dequeued in Decreasing order, from greatest to least.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Util.LambdaHelpers.ForEach``1(System.Collections.Generic.IList{``0},System.Action{``0})">
+            <summary>
+            Performs an action on each item in a list, used to shortcut a "foreach" loop
+            </summary>
+            <typeparam name="T">Type contained in List</typeparam>
+            <param name="collection">List to enumerate over</param>
+            <param name="action">Lambda Function to be performed on all elements in List</param>
+        </member>
+        <member name="M:WebChemistry.Util.LambdaHelpers.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Performs an action on each item in a list, used to shortcut a "foreach" loop
+            </summary>
+            <typeparam name="T">Type contained in List</typeparam>
+            <param name="collection">List to enumerate over</param>
+            <param name="action">Lambda Function to be performed on all elements in List</param>
+        </member>
+        <member name="F:WebChemistry.Util.FibonacciHeapCell`2.Marked">
+            <summary>
+            Determines of a Node has had a child cut from it before
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Util.FibonacciHeapCell`2.Degree">
+            <summary>
+            Determines the depth of a node
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Util.FibonacciHeap`2.UpdateNodesDegree(WebChemistry.Util.FibonacciHeapCell{`0,`1})">
+            <summary>
+            Updates the degree of a node, cascading to update the degree of the
+            parents if nessecary
+            </summary>
+            <param name="parentNode"></param>
+        </member>
+        <member name="M:WebChemistry.Util.FibonacciHeap`2.UpdateNext">
+            <summary>
+            Updates the Next pointer, maintaining the heap
+            by folding duplicate heap degrees into eachother
+            Takes O(lg(N)) time amortized
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Util.FibonacciHeap`2.ReduceNodes(WebChemistry.Util.FibonacciHeapCell{`0,`1},WebChemistry.Util.FibonacciHeapCell{`0,`1})">
+            <summary>
+            Given two nodes, adds the child node as a child of the parent node
+            </summary>
+            <param name="parentNode"></param>
+            <param name="childNode"></param>
+        </member>
+        <member name="M:WebChemistry.Util.ListExporterExtensions.GetExporter``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Exporter extension method for all IEnumerableOfT
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Util.ExportableColumn`1">
+            <summary>
+            Represents custom exportable column with a expression for the property name
+            and a custom format string
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Util.FluentExporter`1">
+            <summary>
+            Exporter that uses Expression tree parsing to work out what values to export for 
+            columns, and will use additional data as specified in the List of ExportableColumn
+            which defines whethere to use custom headers, or formatted output
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:WebChemistry.Util.FluentExporter`1.AsCSVString(System.IO.TextWriter)">
+            <summary>
+            Export all specified columns as a string, 
+            using seperator and column data provided
+            where we may use custom or default headers 
+            (depending on whether a custom header string was supplied)
+            where we may use custom fomatted column data or default data 
+            (depending on whether a custom format string was supplied)
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Util.FluentExporter`1.WhichIsExportedToFileLocation(System.IO.StreamWriter)">
+            <summary>
+            Export to file, using the AsCSVString() method to supply the exportable data
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Util.FluentExporter`1.GetPropertyName``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Gets a Name from an expression tree that is assumed to be a
+            MemberExpression
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Util.SortedList`2.Enumerator">
+            <!-- Failed to insert some or all of included XML --><include file="doc\SortedList.uex" path="docs/doc[@for=&quot;SortedListEnumerator&quot;]/*"/>
+        </member>
+    </members>
+</doc>

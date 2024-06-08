@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tunnels>
+  <Input>./tests/1TQN.pdb</Input>
+  <WorkingDirectory>./test_ignore_het_atoms/</WorkingDirectory>
+  <Params>
+    <Cavity ProbeRadius="3" InteriorThreshold="1.25" IgnoreHETAtoms="1" />
+    <Tunnel SurfaceCoverRadius="10" OriginRadius="5" />
+  </Params>
+  <Export>
+    <Formats PyMol="1" CSV="1" PDBProfile="1" PDBStructure="1" />
+    <Types Cavities="1" Tunnels="1" />
+    <PyMol PDBId="1TQN" SurfaceType="Surface"  />
+  </Export>
+  <Origins Auto="0">
+    <Origin>
+      <Residue Chain="A" SequenceNumber="508" />
+    </Origin>
+  </Origins>
+</Tunnels>

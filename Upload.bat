@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\WinSCP\WinScp.com" /script=upload.txt

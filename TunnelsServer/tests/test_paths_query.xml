@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tunnels>
+  <Input>./tests/1TQN.pdb</Input>
+  <WorkingDirectory>./test_paths_query/</WorkingDirectory>
+  <Params>
+    <Cavity ProbeRadius="3" InteriorThreshold="1.25" />
+    <Tunnel SurfaceCoverRadius="10" OriginRadius="5" />
+  </Params>
+  <Export>
+    <Formats Mesh="1" PyMol="1" CSV="1" />
+    <Types Tunnels="0" />
+    <Mesh Density="1.33" Compress="1" />
+    <PyMol PDBId="1TQN" SurfaceType="Surface"  />
+  </Export>
+  <Paths>
+    <Path>
+      <Start>
+        <Query>Residues("HEM")</Query>
+      </Start>
+      <End>
+        <Point X="-27.435" Y="0.017" Z="-11.724" />
+      </End>
+    </Path>
+  </Paths>
+</Tunnels>

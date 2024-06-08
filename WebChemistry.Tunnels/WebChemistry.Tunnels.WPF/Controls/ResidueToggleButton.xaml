@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="WebChemistry.Tunnels.WPF.Controls.ResidueToggleButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ToggleButton x:Name="toggle" Style="{StaticResource ResidueToggleButton}" Cursor="Hand" />
+        <Ellipse Width="4" Height="4" Fill="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="backboneIndicator" Visibility="Visible" 
+                   IsHitTestVisible="False" />
+    </Grid>
+</UserControl>

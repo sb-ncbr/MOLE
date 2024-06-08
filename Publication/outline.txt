@@ -1,0 +1,25 @@
+-outline
+~ summarize the old version
+
+steps:
+- triangulation + voronoi graph
+- tunnel computation on the graph
+  ~ short summary of old version
+  ~ only on cavity graphs
+- approximating the tunnel space
+  ~ parameters
+  ~ approximating the molecule
+  ~ removing "narrow" space
+- starting points
+  ~ depth algorithm
+  ~ boundary points
+  ~ database entry
+- ending points
+  ~ connected components of the surface graph
+  ~ user defined
+- tunnel comparison
+  ~ quaternion method overview
+  ~ tunnel distance
+  ~ distance algorithm
+
+

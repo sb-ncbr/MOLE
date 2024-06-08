@@ -1,0 +1,104 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChemistry.Tunnels.WPF", "WebChemistry.Tunnels.WPF\WebChemistry.Tunnels.WPF.csproj", "{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChemistry.Tunnels.Core", "WebChemistry.Tunnels.Core\WebChemistry.Tunnels.Core.csproj", "{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChemistry.Tunnels.Server", "WebChemistry.Tunnels.Server\WebChemistry.Tunnels.Server.csproj", "{B30221F3-F54E-4B71-A634-816E1CAECA7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{2EC4C05A-7DE1-4FDE-89C1-A4F0B62BA9BF}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\AsyncCtpLibrary.dll = Lib\AsyncCtpLibrary.dll
+		Lib\AvalonDock.dll = Lib\AvalonDock.dll
+		Lib\AvalonDock.Themes.dll = Lib\AvalonDock.Themes.dll
+		Lib\GalaSoft.MvvmLight.Extras.WPF4.dll = Lib\GalaSoft.MvvmLight.Extras.WPF4.dll
+		Lib\GalaSoft.MvvmLight.WPF4.dll = Lib\GalaSoft.MvvmLight.WPF4.dll
+		Lib\HelixToolkit.dll = Lib\HelixToolkit.dll
+		Lib\MathNet.Numerics.dll = Lib\MathNet.Numerics.dll
+		Lib\Microsoft.ServiceModel.Tcp.dll = Lib\Microsoft.ServiceModel.Tcp.dll
+		Lib\Microsoft.ServiceModel.WebSockets.DesktopClient.dll = Lib\Microsoft.ServiceModel.WebSockets.DesktopClient.dll
+		Lib\Microsoft.ServiceModel.WebSockets.dll = Lib\Microsoft.ServiceModel.WebSockets.dll
+		Lib\Petzold.Media3D.dll = Lib\Petzold.Media3D.dll
+		Lib\QuickGraph.dll = Lib\QuickGraph.dll
+		Lib\System.Interactive.dll = Lib\System.Interactive.dll
+		Lib\System.Reactive.dll = Lib\System.Reactive.dll
+		Lib\System.Reactive.Windows.Threading.dll = Lib\System.Reactive.Windows.Threading.dll
+		Lib\System.Windows.Controls.DataVisualization.Toolkit.dll = Lib\System.Windows.Controls.DataVisualization.Toolkit.dll
+		Lib\System.Windows.Interactivity.dll = Lib\System.Windows.Interactivity.dll
+		Lib\WPFToolkit.dll = Lib\WPFToolkit.dll
+		Lib\WPFToolkit.Extended.dll = Lib\WPFToolkit.Extended.dll
+		Lib\zlib.net.dll = Lib\zlib.net.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XMLDocs", "XMLDocs", "{E3B0C50E-6D08-465D-88ED-566E21440A4B}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\AsyncCtpLibrary.xml = Lib\AsyncCtpLibrary.xml
+		Lib\AvalonDock.XML = Lib\AvalonDock.XML
+		Lib\GalaSoft.MvvmLight.Extras.WPF4.xml = Lib\GalaSoft.MvvmLight.Extras.WPF4.xml
+		Lib\GalaSoft.MvvmLight.WPF4.xml = Lib\GalaSoft.MvvmLight.WPF4.xml
+		Lib\MathNet.Numerics.xml = Lib\MathNet.Numerics.xml
+		Lib\Microsoft.ServiceModel.WebSockets.xml = Lib\Microsoft.ServiceModel.WebSockets.xml
+		Lib\System.Interactive.XML = Lib\System.Interactive.XML
+		Lib\System.Reactive.Windows.Threading.XML = Lib\System.Reactive.Windows.Threading.XML
+		Lib\System.Reactive.XML = Lib\System.Reactive.XML
+		Lib\WebChemistry.Framework.Core.xml = Lib\WebChemistry.Framework.Core.xml
+		Lib\WebChemistry.Framework.Geometry.xml = Lib\WebChemistry.Framework.Geometry.xml
+		Lib\WebChemistry.SiteBinder.xml = Lib\WebChemistry.SiteBinder.xml
+		Lib\WebChemistry.Util.xml = Lib\WebChemistry.Util.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|x86.ActiveCfg = Release|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Release|x86.ActiveCfg = Release|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B30221F3-F54E-4B71-A634-816E1CAECA7B}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E3B0C50E-6D08-465D-88ED-566E21440A4B} = {2EC4C05A-7DE1-4FDE-89C1-A4F0B62BA9BF}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal

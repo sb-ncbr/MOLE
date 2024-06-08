@@ -1,0 +1,1038 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebChemistry.Framework.Geometry</name>
+    </assembly>
+    <members>
+        <member name="T:WebChemistry.Framework.Geometry.VertexBuffer">
+            <summary>
+            Used to effectively store vertices beyond.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VertexBuffer.EnsureCapacity">
+            <summary>
+            Size matters.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VertexBuffer.Add(WebChemistry.Framework.Geometry.VertexWrap)">
+            <summary>
+            Adds a vertex to the buffer.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VertexBuffer.Clear">
+            <summary>
+            Sets the Count to 0, otherwise does nothing.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.VertexBuffer.Count">
+            <summary>
+            Number of elements present in the buffer.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.VertexBuffer.Item(System.Int32)">
+            <summary>
+            Get the i-th element.
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.FaceList">
+            <summary>
+            A priority based linked list.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.FaceList.AddFirst(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Adds the element to the beginning.
+            </summary>
+            <param name="face"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.FaceList.Add(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Adds a face to the list.
+            </summary>
+            <param name="face"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.FaceList.Remove(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Removes the element from the list.
+            </summary>
+            <param name="face"></param>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.FaceList.First">
+            <summary>
+            Get the first element.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.ConvexFace`2">
+            <summary>
+            A convex face representation containing adjacency information.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFace`2.Adjacency">
+            <summary>
+            Adjacency. Array of length "dimension".
+            If F = Adjacency[i] then the vertices shared with F are Vertices[j] where j != i.
+            In the context of triangulation, can be null (indicates the cell is at boundary).
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFace`2.Vertices">
+            <summary>
+            The vertices stored in clockwise order (for dimensions 2 and 3).
+            Unless I accidentally switch some index somewhere in which case the order is CCW. Either way, it is consistent.
+            3D Normal = (V[1] - V[0]) x (V[2] - V[1]).
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.DefaultConvexFace`1">
+            <summary>
+            A default convex face representation.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFace3D`2.Adjacency">
+            <summary>
+            Adjacency. Array of length "dimension".
+            If F = Adjacency[i] then the vertices shared with F are Vertices[j] where j != i.
+            In the context of triangulation, can be null (indicates the cell is at boundary).
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexFace3D`2.Vertices">
+            <summary>
+            The vertices stored in clockwise order (for dimensions 2 and 3).
+            Unless I accidentally switch some index somewhere in which case the order is CCW. Either way, it is consistent.
+            3D Normal = (V[1] - V[0]) x (V[2] - V[1]).
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.DefaultConvexFace3D`1">
+            <summary>
+            A default convex face representation.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.VertexWrap">
+            <summary>
+            Wraps each IVertex to allow marking of nodes.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.VertexWrap.Vertex">
+            <summary>
+            Ref. to the original vertex.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.VertexWrap.PositionData">
+            <summary>
+            Direct reference to PositionData makes IsVertexOverFace faster.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.VertexWrap.Marked">
+            <summary>
+            Used mostly to enumerate unique vertices.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.ConvexFaceInternal">
+            <summary>
+            This internal class manages the faces of the convex hull. It is a 
+            separate class from the desired user class.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexFaceInternal.#ctor(System.Int32,WebChemistry.Framework.Geometry.VertexBuffer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebChemistry.Framework.Geometry.ConvexFaceInternal"/> class.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.AdjacentFaces">
+            <summary>
+            Gets or sets the adjacent face data.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.VerticesBeyond">
+            <summary>
+            Gets or sets the vertices beyond.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.FurthestVertex">
+            <summary>
+            The furthest vertex.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.FurthestDistance">
+            <summary>
+            Distance to the furthest vertex.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.Vertices">
+            <summary>
+            Gets or sets the vertices.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.Normal">
+            <summary>
+            Gets or sets the normal vector.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.Offset">
+            <summary>
+            Face plane constant element.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.Tag">
+            <summary>
+            Used to traverse affected faces and create the Delaunay representation.
+            1 - Interior Face
+            2 - Interior Face with Horizon Neighbor
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.Previous">
+            <summary>
+            Prev node in the list.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.Next">
+            <summary>
+            Next node in the list.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexFaceInternal.InList">
+            <summary>
+            Is it present in the list.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.ConvexHull">
+            <summary>
+            Factory class for computing convex hulls.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHull.Create``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates a convex hull of the input data.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHull.Create``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.ConvexHull`2">
+            <summary>
+            Representation of a convex hull.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHull`2.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates the convex hull.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHull`2.#ctor">
+            <summary>
+            Can only be created using a factory method.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexHull`2.Points">
+            <summary>
+            Points of the convex hull.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.ConvexHull`2.Faces">
+            <summary>
+            Faces of the convex hull.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.ConvexHullExtensions">
+            <summary>
+            Extensions for the convex hull code.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullExtensions.ContainsPoint``2(WebChemistry.Framework.Geometry.ConvexFace{``0,``1},WebChemistry.Framework.Math.Vector3D)">
+            <summary>
+            Checks if the given convex face contains the given points.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="face"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullExtensions.ContainsPoint``2(WebChemistry.Framework.Geometry.ConvexFace{``0,``1},WebChemistry.Framework.Math.Vector)">
+            <summary>
+            Checks if the given convex face contains the given points.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="face"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.ConvexHullInternal.Center">
+            <summary>
+            The centroid of the currently computed hull.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.Initialize">
+            <summary>
+            Initialize buffers and lists.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.DetermineDimension">
+            <summary>
+            Check the dimensionality of the input data.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.InitiateFaceDatabase">
+            <summary>
+            Create the first faces from (dimension + 1) vertices.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.CalculateFacePlane(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Calculates the normal and offset of the hyper-plane given by the face's vertices.
+            </summary>
+            <param name="face"></param>
+            <returns>True of the vertex order was flipped.</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.GetVertexDistance(WebChemistry.Framework.Geometry.VertexWrap,WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Check if the vertex is "visible" from the face.
+            The vertex is "over face" if the return value is >= 0.
+            </summary>
+            <param name="v"></param>
+            <param name="f"></param>
+            <returns>The vertex is "over face" if the result is positive.</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.TagAffectedFaces(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Tags all faces seen from the current vertex with 1.
+            </summary>
+            <param name="currentFace"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.TraverseAffectedFaces(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Recursively traverse all the relevant faces.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.UpdateAdjacency(WebChemistry.Framework.Geometry.ConvexFaceInternal,WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Check if 2 faces are adjacent and if so, update their AdjacentFaces array.
+            </summary>
+            <param name="l"></param>
+            <param name="r"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.RecycleFace(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Recycle face for future use.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.CreateCone">
+            <summary>
+            Removes the faces "covered" by the current vertex and adds the newly created ones.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.SubtractFast(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            Subtracts vectors x and y and stores the result to target.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="target"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindNormalVector4D(WebChemistry.Framework.Geometry.VertexWrap[],System.Double[])">
+            <summary>
+            Finds 4D normal vector.
+            </summary>
+            <param name="vertices"></param>
+            <param name="normal"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindNormalVector3D(WebChemistry.Framework.Geometry.VertexWrap[],System.Double[])">
+            <summary>
+            Finds 3D normal vector.
+            </summary>
+            <param name="vertices"></param>
+            <param name="normal"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindNormalVector2D(WebChemistry.Framework.Geometry.VertexWrap[],System.Double[])">
+            <summary>
+            Finds 2D normal vector.
+            </summary>
+            <param name="vertices"></param>
+            <param name="normal"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindNormalVector(WebChemistry.Framework.Geometry.VertexWrap[],System.Double[])">
+            <summary>
+            Finds normal vector of a hyper-plane given by vertices.
+            Stores the results to normalData.
+            </summary>
+            <param name="vertices"></param>
+            <param name="normalData"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.IsBeyond(WebChemistry.Framework.Geometry.ConvexFaceInternal,WebChemistry.Framework.Geometry.VertexBuffer,WebChemistry.Framework.Geometry.VertexWrap)">
+            <summary>
+            Check whether the vertex v is beyond the given face. If so, add it to beyondVertices.
+            </summary>
+            <param name="face"></param>
+            <param name="beyondVertices"></param>
+            <param name="v"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindBeyondVertices(WebChemistry.Framework.Geometry.ConvexFaceInternal)">
+            <summary>
+            Used in the "initialization" code.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindBeyondVertices(WebChemistry.Framework.Geometry.ConvexFaceInternal,WebChemistry.Framework.Geometry.VertexBuffer,WebChemistry.Framework.Geometry.VertexBuffer)">
+            <summary>
+            Used by update faces.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.UpdateCenter">
+            <summary>
+            Recalculates the centroid of the current hull.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.InitConvexHull">
+            <summary>
+            Find the (dimension+1) initial points and create the simplexes.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindInitialPoints(System.Collections.Generic.List{WebChemistry.Framework.Geometry.VertexWrap})">
+            <summary>
+            Finds (dimension + 1) initial points.
+            </summary>
+            <param name="extremes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.GetSimplexVolume(WebChemistry.Framework.Geometry.VertexWrap,System.Collections.Generic.List{WebChemistry.Framework.Geometry.VertexWrap})">
+            <summary>
+            Computes the volume of the (n=initialPoints.Count)D simplex defined by the
+            pivot and initialPoints.
+            This is computed as the determinant of the matrix | initialPoints[i] - pivot |
+            </summary>
+            <param name="pivot"></param>
+            <param name="initialPoints"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindExtremes">
+            <summary>
+            Finds the extremes in all dimensions.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.ThrowSingular">
+            <summary>
+            The exception thrown if singular input data detected.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.FindConvexHull">
+            <summary>
+            Fins the convex hull.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.#ctor(System.Collections.Generic.IEnumerable{WebChemistry.Framework.Geometry.IVertex})">
+            <summary>
+            Wraps the vertices and determines the dimension if it's unknown.
+            </summary>
+            <param name="vertices"></param>
+            <param name="dim"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.GetConvexHullInternal``1(System.Boolean)">
+            <summary>
+            Finds the vertices on the convex hull and optionally converts them to the TVertex array.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <param name="onlyCompute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.GetConvexFacesInternal``2">
+            <summary>
+            Finds the convex hull and creates the TFace objects.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.GetConvexFacesInternal``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            This is used by the Delaunay triangulation code.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.ConvexHullInternal.GetConvexHullAndFaces``2(System.Collections.Generic.IEnumerable{WebChemistry.Framework.Geometry.IVertex})">
+            <summary>
+            This is called by the "ConvexHull" class.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer">
+            <summary>
+            Used to effectively store vertices beyond.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer.EnsureCapacity">
+            <summary>
+            Size matters.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer.Add(WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap)">
+            <summary>
+            Adds a vertex to the buffer.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer.Clear">
+            <summary>
+            Sets the Count to 0, otherwise does nothing.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer.Count">
+            <summary>
+            Number of elements present in the buffer.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer.Item(System.Int32)">
+            <summary>
+            Get the i-th element.
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.Triangulation3D.FaceList">
+            <summary>
+            A priority based linked list.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.FaceList.AddFirst(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Adds the element to the beginning.
+            </summary>
+            <param name="face"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.FaceList.Add(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Adds a face to the list.
+            </summary>
+            <param name="face"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.FaceList.Remove(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Removes the element from the list.
+            </summary>
+            <param name="face"></param>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.Triangulation3D.FaceList.First">
+            <summary>
+            Get the first element.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap">
+            <summary>
+            Wraps each IVertex to allow marking of nodes.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap.Vertex">
+            <summary>
+            Ref. to the original vertex.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap.PositionData">
+            <summary>
+            Direct reference to PositionData makes IsVertexOverFace faster.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap.Marked">
+            <summary>
+            Used mostly to enumerate unique vertices.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal">
+            <summary>
+            This internal class manages the faces of the convex hull. It is a 
+            separate class from the desired user class.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.#ctor(System.Int32,WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal"/> class.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.AdjacentFaces">
+            <summary>
+            Gets or sets the adjacent face data.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.VerticesBeyond">
+            <summary>
+            Gets or sets the vertices beyond.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.FurthestVertex">
+            <summary>
+            The furthest vertex.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.FurthestDistance">
+            <summary>
+            Distance to the furthest vertex.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.Vertices">
+            <summary>
+            Gets or sets the vertices.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.Normal">
+            <summary>
+            Gets or sets the normal vector.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.Offset">
+            <summary>
+            Face plane constant element.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.Tag">
+            <summary>
+            Used to traverse affected faces and create the Delaunay representation.
+            1 - Interior Face
+            2 - Interior Face with Horizon Neighbor
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.Previous">
+            <summary>
+            Prev node in the list.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.Next">
+            <summary>
+            Next node in the list.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal.InList">
+            <summary>
+            Is it present in the list.
+            </summary>
+        </member>
+        <member name="F:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.Center">
+            <summary>
+            The centroid of the currently computed hull.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.Initialize">
+            <summary>
+            Initialize buffers and lists.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.DetermineDimension">
+            <summary>
+            Check the dimensionality of the input data.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.InitiateFaceDatabase">
+            <summary>
+            Create the first faces from (dimension + 1) vertices.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.CalculateFacePlane(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Calculates the normal and offset of the hyper-plane given by the face's vertices.
+            </summary>
+            <param name="face"></param>
+            <returns>True of the vertex order was flipped.</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.GetVertexDistance(WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap,WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Check if the vertex is "visible" from the face.
+            The vertex is "over face" if the return value is >= 0.
+            </summary>
+            <param name="v"></param>
+            <param name="f"></param>
+            <returns>The vertex is "over face" if the result is positive.</returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.TagAffectedFaces(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Tags all faces seen from the current vertex with 1.
+            </summary>
+            <param name="currentFace"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.TraverseAffectedFaces(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Recursively traverse all the relevant faces.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.UpdateAdjacency(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal,WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Check if 2 faces are adjacent and if so, update their AdjacentFaces array.
+            </summary>
+            <param name="l"></param>
+            <param name="r"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.RecycleFace(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Recycle face for future use.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.CreateCone">
+            <summary>
+            Removes the faces "covered" by the current vertex and adds the newly created ones.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.FindNormalVector(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Finds normal vector of a hyper-plane given by vertices.
+            Stores the results to normalData.
+            </summary>
+            <param name="vertices"></param>
+            <param name="normalData"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.IsBeyond(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal,WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer,WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap)">
+            <summary>
+            Check whether the vertex v is beyond the given face. If so, add it to beyondVertices.
+            </summary>
+            <param name="face"></param>
+            <param name="beyondVertices"></param>
+            <param name="v"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.FindBeyondVertices(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal)">
+            <summary>
+            Used in the "initialization" code.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.FindBeyondVertices(WebChemistry.Framework.Geometry.Triangulation3D.ConvexFaceInternal,WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer,WebChemistry.Framework.Geometry.Triangulation3D.VertexBuffer)">
+            <summary>
+            Used by update faces.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.UpdateCenter">
+            <summary>
+            Recalculates the centroid of the current hull.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.InitConvexHull">
+            <summary>
+            Find the (dimension+1) initial points and create the simplexes.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.FindInitialPoints(System.Collections.Generic.List{WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap})">
+            <summary>
+            Finds (dimension + 1) initial points.
+            </summary>
+            <param name="extremes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.GetSimplexVolume(WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap,System.Collections.Generic.List{WebChemistry.Framework.Geometry.Triangulation3D.VertexWrap})">
+            <summary>
+            Computes the volume of the (n=initialPoints.Count)D simplex defined by the
+            pivot and initialPoints.
+            This is computed as the determinant of the matrix | initialPoints[i] - pivot |
+            </summary>
+            <param name="pivot"></param>
+            <param name="initialPoints"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.FindExtremes">
+            <summary>
+            Finds the extremes in all dimensions.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.ThrowSingular">
+            <summary>
+            The exception thrown if singular input data detected.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.FindConvexHull">
+            <summary>
+            Fins the convex hull.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.#ctor(System.Collections.Generic.IEnumerable{WebChemistry.Framework.Geometry.IVertex})">
+            <summary>
+            Wraps the vertices and determines the dimension if it's unknown.
+            </summary>
+            <param name="vertices"></param>
+            <param name="dim"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.GetConvexHullInternal``1(System.Boolean)">
+            <summary>
+            Finds the vertices on the convex hull and optionally converts them to the TVertex array.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <param name="onlyCompute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.GetConvexFacesInternal``2">
+            <summary>
+            Finds the convex hull and creates the TFace objects.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.GetConvexFacesInternal``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            This is used by the Delaunay triangulation code.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation3D.ConvexHull4DInternal.GetConvexHullAndFaces``2(System.Collections.Generic.IEnumerable{WebChemistry.Framework.Geometry.IVertex})">
+            <summary>
+            This is called by the "ConvexHull" class.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hilbert.HilbertOrdering`1.HilbertEncode3D(System.Int32,Hilbert.HilbertOrdering{`0}.IntCoordinates)">
+            <summary>
+            Computes the Hilbert index of the given 3D vertex
+            </summary>
+            <remarks>
+            Algorithm by Chris Hamilton, Compact hilbert Indices, 2006, p.19
+            This implementation is 3D specific
+            </remarks>
+            <param name="order">An integer in the range 0 - 5</param>
+            <param name="coordinates">An array of 3 unsigned integers in the range 0 - (2^order - 1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Hilbert.HilbertOrdering`1.RotRight3b(System.UInt32,System.Int32)">
+            <summary>
+            Computes right bit rotation of a 3-bit number stored in an unsigned integer
+            </summary>
+            <param name="i"></param>
+            <param name="shift"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hilbert.HilbertOrdering`1.RotLeft3b(System.UInt32,System.Int32)">
+            <summary>
+            Computes left bit rotation of a 3-bit number stored in an unsigned integer
+            </summary>
+            <param name="i"></param>
+            <param name="shift"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Hilbert.HilbertOrdering`1.GrayCodeInverse3b(System.UInt32)">
+            <summary>
+            Computes the number encoded in a 3-bit gray code value
+            </summary>
+            <param name="g"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.DelaunayTriangulation`2">
+            <summary>
+            Calculation and representation of Delaunay triangulation.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.ITriangulation`2">
+            <summary>
+            Simple interface to unify different types of triangulations in the future.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.DelaunayTriangulation`2.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates the Delaunay triangulation of the input data.
+            Be careful with concurrency, because during the computation, the vertex position arrays get resized.
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.DelaunayTriangulation`2.#ctor">
+            <summary>
+            Can only be created using a factory method.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.DelaunayTriangulation`2.Cells">
+            <summary>
+            Cells of the triangulation.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.DelaunayTriangulation3D`2.#ctor">
+            <summary>
+            Can only be created using a factory method.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.DelaunayTriangulation3D`2.Cells">
+            <summary>
+            Cells of the triangulation.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.Triangulation">
+            <summary>
+            Factory class for creating triangulations.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation.CreateDelaunay``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates the Delaunay triangulation of the input data.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.Triangulation.CreateDelaunay``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates the Delaunay triangulation of the input data.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TFace"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.TriangulationCell`2">
+            <summary>
+            Representation of the triangulation cell. Pretty much the same as ConvexFace,
+            just wanted to distinguish the two.
+            To declare your own face type, use class Face : DelaunayFace(of Vertex, of Face)
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.DefaultTriangulationCell`1">
+            <summary>
+            Default triangulation cell.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.DefaultTriangulationCell3D`1">
+            <summary>
+            Default triangulation cell.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.VoronoiEdge`2">
+            <summary>
+            A class representing an (undirected) edge of the Voronoi graph.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiEdge`2.Equals(System.Object)">
+            <summary>
+            ...
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiEdge`2.GetHashCode">
+            <summary>
+            ...
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiEdge`2.#ctor">
+            <summary>
+            Create an instance of the edge.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiEdge`2.#ctor(`1,`1)">
+            <summary>
+            Create an instance of the edge.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.VoronoiEdge`2.Source">
+            <summary>
+            Source of the edge.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.VoronoiEdge`2.Target">
+            <summary>
+            Target of the edge.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.VoronoiMesh">
+            <summary>
+            A factory class for creating a Voronoi mesh.
+            </summary>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiMesh.Create``3(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Create the voronoi mesh.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+            <typeparam name="TEdge"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiMesh.Create``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Create the voronoi mesh.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+            <typeparam name="TEdge"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiMesh.Create``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Create the voronoi mesh.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+            <typeparam name="TEdge"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.VoronoiMesh`3">
+            <summary>
+            A representation of a voronoi mesh.
+            </summary>
+            <typeparam name="TVertex"></typeparam>
+            <typeparam name="TCell"></typeparam>
+            <typeparam name="TEdge"></typeparam>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiMesh`3.Create(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Create a voronoi diagram of the input data.
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:WebChemistry.Framework.Geometry.VoronoiMesh`3.#ctor">
+            <summary>
+            Can only be created using a factory method.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.VoronoiMesh`3.Vertices">
+            <summary>
+            Cells of the diagram.
+            </summary>
+        </member>
+        <member name="P:WebChemistry.Framework.Geometry.VoronoiMesh`3.Edges">
+            <summary>
+            Edges connecting the cells. 
+            The same information can be retrieved Cells' Adjacency.
+            </summary>
+        </member>
+        <member name="T:WebChemistry.Framework.Geometry.VoronoiMesh`3.EdgeComparer">
+            <summary>
+            This is probably not needed, but might make things a tiny bit faster.
+            </summary>
+        </member>
+    </members>
+</doc>
