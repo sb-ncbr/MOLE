@@ -2,3 +2,6 @@
 *.dll
 *.exe
 bib/.pdf
+obj/
+WebChemistry.Tunnels/packages/
+MigrationBackup/

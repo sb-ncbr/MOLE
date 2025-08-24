@@ -1,13 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.36324.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChemistry.Tunnels.WPF", "WebChemistry.Tunnels.WPF\WebChemistry.Tunnels.WPF.csproj", "{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChemistry.Tunnels.Core", "WebChemistry.Tunnels.Core\WebChemistry.Tunnels.Core.csproj", "{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChemistry.Tunnels.Server", "WebChemistry.Tunnels.Server\WebChemistry.Tunnels.Server.csproj", "{B30221F3-F54E-4B71-A634-816E1CAECA7B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28} = {5354BF1A-59C0-40F6-91CB-6611F2F3BF28}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{2EC4C05A-7DE1-4FDE-89C1-A4F0B62BA9BF}"
 	ProjectSection(SolutionItems) = preProject
@@ -60,16 +63,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{69DC7ABF-CB17-4EC3-A68B-8F2F3B81C64B}.Release|x86.ActiveCfg = Release|Any CPU
 		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5354BF1A-59C0-40F6-91CB-6611F2F3BF28}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -96,6 +89,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E3B0C50E-6D08-465D-88ED-566E21440A4B} = {2EC4C05A-7DE1-4FDE-89C1-A4F0B62BA9BF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A69552A5-1891-4268-BDFF-239CF082625B}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

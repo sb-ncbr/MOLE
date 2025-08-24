@@ -9,6 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using AvalonDock;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -31,6 +32,7 @@ using System.Windows.Shapes;
 using System.Windows.Shell;
 using WebChemistry.Tunnels.WPF;
 using WebChemistry.Tunnels.WPF.Controls;
+using WebChemistry.Tunnels.WPF.Views;
 
 
 namespace WebChemistry.Tunnels.WPF.Views {

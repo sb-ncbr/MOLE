@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
-      <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
-    </Reference>
     <Reference Include="QuickGraph, Version=3.3.51106.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
       <HintPath>..\Lib\QuickGraph.dll</HintPath>
     </Reference>
@@ -45,25 +42,17 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Interactive, Version=1.1.10823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebChemistry\Framework\bin\Net\System.Interactive.dll</HintPath>
+      <HintPath>..\Lib\System.Interactive.dll</HintPath>
     </Reference>
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\..\..\WebChemistry\Framework\bin\Net\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\..\..\WebChemistry\Framework\bin\Net\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\..\..\WebChemistry\Framework\bin\Net\System.Reactive.Linq.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebChemistry.Framework.Core, Version=2.15.2.8, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="WebChemistry.Framework.Core, Version=2.24.6.8, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\WebChemistry\Framework\bin\Net\WebChemistry.Framework.Core.dll</HintPath>
+      <HintPath>..\..\..\webchemistry\Framework\bin\Net\WebChemistry.Framework.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -105,10 +94,13 @@
     <Compile Include="TunnelVdwRadii.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+  <PackageReference Include="Microsoft.CompilerServices.AsyncTargetingPack" Version="1.0.0" />
+  <PackageReference Include="Rx-Core" Version="2.1.30214.0" />
+  <PackageReference Include="Rx-Interfaces" Version="2.1.30214.0" />
+  <PackageReference Include="Rx-Linq" Version="2.1.30214.0" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

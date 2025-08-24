@@ -3422,7 +3422,14 @@
             <param name="separator"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:WebChemistry.Framework.Core.Pdb.PdbResidueCollection.GetExplicitlyCountedResidueString(System.Collections.Generic.IDictionary{System.String,System.Int32},System.String)" -->
+        <member name="M:WebChemistry.Framework.Core.Pdb.PdbResidueCollection.GetExplicitlyCountedResidueString(System.Collections.Generic.IDictionary{System.String,System.Int32},System.String)">
+            <summary>
+            Returns the counted residue string: DMU*2-ASP*3-ASN*1
+            </summary>
+            <param name="counts"></param>
+            <param name="separator"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebChemistry.Framework.Core.Pdb.PdbResidueCollection.GetCountedShortAminoNamesString(System.Collections.Generic.IDictionary{System.String,System.Int32},System.String)">
             <summary>
             Returns the counted residue string: DMU*2-A*3-R*5
