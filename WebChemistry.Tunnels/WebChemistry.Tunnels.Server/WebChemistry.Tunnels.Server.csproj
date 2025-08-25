@@ -103,20 +103,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del "$(SolutionDir)..\TunnelsServer\*.exe"
-del "$(SolutionDir)..\TunnelsServer\*.dll"
+    <PostBuildEvent>
 del "$(SolutionDir)..\Mole2_cmd\*.exe"
 del "$(SolutionDir)..\Mole2_cmd\*.dll"
 del "$(SolutionDir)..\Mole2_pymol\Binary\*.exe"
 del "$(SolutionDir)..\Mole2_pymol\Binary\*.dll"
-copy "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)..\TunnelsServer" /Y
-copy "$(ProjectDir)$(OutDir)*Server.exe" "$(SolutionDir)..\TunnelsServer" /Y
-copy "$(SolutionDir)..\TunnelsServer\WebChemistry.Tunnels.Server.exe" "$(SolutionDir)..\TunnelsServer\mole2.exe"
-del "$(SolutionDir)..\TunnelsServer\WebChemistry.Tunnels.Server.exe"
-copy "$(SolutionDir)..\TunnelsServer\*.dll" "$(SolutionDir)..\Mole2_cmd" /Y
-copy "$(SolutionDir)..\TunnelsServer\*.exe" "$(SolutionDir)..\Mole2_cmd" /Y
-copy "$(SolutionDir)..\TunnelsServer\*.dll" "$(SolutionDir)..\Mole2_pymol\Binary" /Y
-copy "$(SolutionDir)..\TunnelsServer\*.exe" "$(SolutionDir)..\Mole2_pymol\Binary" /Y</PostBuildEvent>
+copy "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)..\Mole2_cmd" /Y
+copy "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)..\Mole2_pymol\Binary" /Y
+copy "$(TargetPath)" "$(SolutionDir)..\Mole2_cmd\mole2.exe" /Y
+copy "$(TargetPath)" "$(SolutionDir)..\Mole2_pymol\Binary\mole2.exe" /Y
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
