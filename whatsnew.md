@@ -13,16 +13,6 @@ General
 - Residue representtion -- added InsertionCode, NAME NUMBER [CHAIN] [i:INSERTIONCODE] [Backbone].
 - Improved PyMOL output.
 
-UI Version
-----------
-
-- Better selection of Active Residues (ability to use [PatternQuery](https://webchem.ncbr.muni.cz/Wiki/PatternQuery:UserManual)).
-- Added Ignore HET Atoms option.
-- Added ability to export current computation settings in XML.
-- Computation of "User Pores" now works for any cavity, not just the "surface".
-- Other minor improvements.
-- [Breaking change] 2.5 workspace files are not backwards compatible and older version ones cannot be loaded.
-
 Command line version
 --------------------
 

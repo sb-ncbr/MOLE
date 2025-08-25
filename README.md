@@ -5,11 +5,11 @@ A universal toolkit for rapid location and characterization of channels and pore
 ## Installation
 To compile all projects:
 
-* Visual Studio 2017 recommended.
+* Visual Studio 2019 recommended.
 * [Webchemistry](https://github.com/sb-ncbr/webchemistry) dependencies
 
 ## Web service
-The algorithm is implemented in a popular web service available at: [https://mole.upol.cz/](https://mole.upol.cz/).
+The algorithm is implemented in a popular web service available at: [https://moleonline.cz/](https://moleonline.cz/).
 
 ## How to cite
 Should you find this toolkit useful please cite one of the publications based on what you used:
