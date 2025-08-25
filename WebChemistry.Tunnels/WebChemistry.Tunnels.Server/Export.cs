@@ -17,7 +17,6 @@ namespace WebChemistry.Tunnels.Server
     using WebChemistry.Framework.Math;
     using WebChemistry.Tunnels.Core;
     using WebChemistry.Tunnels.Core.Export;
-    using WebChemistry.Tunnels.Core.Geometry;
     using WebChemistry.Tunnels.Core.Helpers;
 
     class ExportParameters

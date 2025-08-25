@@ -2,20 +2,12 @@
 namespace WebChemistry.Tunnels.Server
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Text;
-    using System.Xml;
     using System.Xml.Linq;
     using WebChemistry.Framework.Core;
-    using WebChemistry.Framework.Math;
     using WebChemistry.Tunnels.Core;
-    using WebChemistry.Tunnels.Core.Geometry;
-    using WebChemistry.Tunnels.Core.Helpers;
 
     class Program
     {

@@ -4,7 +4,6 @@
 
 namespace WebChemistry.Tunnels.Server
 {
-    using IronPython.Hosting;
     using Microsoft.Scripting;
     using Microsoft.Scripting.Hosting;
     using System;
