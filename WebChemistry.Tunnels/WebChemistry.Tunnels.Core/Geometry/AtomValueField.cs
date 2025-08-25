@@ -50,7 +50,6 @@ namespace WebChemistry.Tunnels.Core.Geometry
                 method == AtomValueFieldInterpolationMethod.AllResidues);
         }
 
-        AtomValueFieldInterpolationMethod Method;
         IStructure Structure;
         Dictionary<IAtom, double> Values;
         KDAtomTree AtomPivots;
@@ -449,7 +448,6 @@ namespace WebChemistry.Tunnels.Core.Geometry
                 IgnoreHydrogens = ignoreHydrogens,
                 AtomPivots = atomPivots,
                 ResiduePivots = residuePivots,
-                Method = method,
                 Radius = radius,
                 Values = values,
                 Structure = structure,
