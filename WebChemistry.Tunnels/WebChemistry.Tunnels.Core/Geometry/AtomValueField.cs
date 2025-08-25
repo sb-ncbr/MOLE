@@ -286,7 +286,6 @@ namespace WebChemistry.Tunnels.Core.Geometry
             int len = residues.Count;
             for (int i = 0; i < len; i++)
             {
-                double t;
                 var r = residues[i];
                 var charge = GetResidueCharge(r.Value);
                 if (charge.HasValue)

@@ -25,7 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{2EC4C05A-7DE
 		Lib\Microsoft.ServiceModel.WebSockets.DesktopClient.dll = Lib\Microsoft.ServiceModel.WebSockets.DesktopClient.dll
 		Lib\Microsoft.ServiceModel.WebSockets.dll = Lib\Microsoft.ServiceModel.WebSockets.dll
 		Lib\Petzold.Media3D.dll = Lib\Petzold.Media3D.dll
-		Lib\QuickGraph.dll = Lib\QuickGraph.dll
 		Lib\System.Interactive.dll = Lib\System.Interactive.dll
 		Lib\System.Reactive.dll = Lib\System.Reactive.dll
 		Lib\System.Reactive.Windows.Threading.dll = Lib\System.Reactive.Windows.Threading.dll

@@ -584,7 +584,6 @@ namespace WebChemistry.Tunnels.Core
             double logD = 0.0;
             double logS = 0.0;
             double polarity = 0.0;
-            double hydratation = 0.0;
             double mutability = 0.0;
             int positives = 0;
             int negatives = 0;
@@ -608,7 +607,6 @@ namespace WebChemistry.Tunnels.Core
                     negatives++;
                 }
                 //hydropathy += info.Hydropathy;
-                //hydratation += info.Hydratation;
                 //hydrophobicity += info.Hydrophobicity;
                 //polarity += info.Polarity;
                 mutability += info.Mutability;
@@ -625,7 +623,6 @@ namespace WebChemistry.Tunnels.Core
                 Charge: charge,
                 Ionizable: ionizable,
                 Polarity: polarity,
-                //Hydratation: hydratation,
                 Hydrophobicity: hydrophobicity,
                 Hydropathy: hydropathy,
                 LogP: logP,
