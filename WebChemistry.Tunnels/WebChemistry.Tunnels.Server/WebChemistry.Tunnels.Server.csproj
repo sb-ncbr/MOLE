@@ -95,7 +95,6 @@
       <Version>2.1.30214</Version>
     </PackageReference>
     <PackageReference Include="Rx-Linq" Version="2.1.30214.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebChemistry.Tunnels.Core\WebChemistry.Tunnels.Core.csproj">
