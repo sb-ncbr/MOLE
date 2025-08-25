@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebChemistry.Tunnels.Server</RootNamespace>
     <AssemblyName>WebChemistry.Tunnels.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -29,6 +29,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -38,23 +39,24 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-   <PackageReference Include="IronPython" Version="2.7.5" />
-   <PackageReference Include="Newtonsoft.Json" Version="6.0.6" />
-   <PackageReference Include="QuickGraph" Version="3.3.51106.0" />
-   <Reference Include="System" />
-   <Reference Include="System.Core" />
-   <Reference Include="System.Net" />
-   <Reference Include="System.Xml.Linq" />
-   <Reference Include="System.Data.DataSetExtensions" />
-   <Reference Include="Microsoft.CSharp" />
-   <Reference Include="System.Data" />
-   <Reference Include="System.Xml" />
-   <Reference Include="WebChemistry.Framework.Core">
+    <PackageReference Include="IronPython" Version="2.7.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="6.0.6" />
+    <PackageReference Include="QuickGraph" Version="3.3.51106.0" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebChemistry.Framework.Core">
       <HintPath>..\..\..\webchemistry\Framework\bin\Net\WebChemistry.Framework.Core.dll</HintPath>
     </Reference>
     <Reference Include="WebChemistry.Queries.Core">
@@ -82,7 +84,7 @@
     <PackageReference Include="DynamicLanguageRuntime.Net40.Unofficial">
       <Version>2.6.1003.1</Version>
     </PackageReference>
-      <PackageReference Include="Microsoft.CompilerServices.AsyncTargetingPack" Version="1.0.0" />
+    <PackageReference Include="Microsoft.CompilerServices.AsyncTargetingPack" Version="1.0.0" />
     <PackageReference Include="Rx-Core">
       <Version>2.1.30214</Version>
     </PackageReference>

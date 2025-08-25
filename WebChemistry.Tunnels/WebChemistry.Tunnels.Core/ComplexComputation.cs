@@ -455,7 +455,7 @@ namespace WebChemistry.Tunnels.Core
         async void UpdateOpenings(ComputationProgress p)
         {
             p.UpdateStatus("Updating openings...");
-            await TaskEx.WhenAll(Cavities.Select(ch => TaskEx.Run(() => ch.UpdateOpenings())).ToArray());
+            await Task.WhenAll(Cavities.Select(ch => Task.Run(() => ch.UpdateOpenings())).ToArray());
         }
         
         /// <summary>

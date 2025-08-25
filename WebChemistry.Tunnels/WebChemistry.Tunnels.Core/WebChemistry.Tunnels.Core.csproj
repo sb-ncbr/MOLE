@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,12 +10,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebChemistry.Tunnels.Core</RootNamespace>
     <AssemblyName>WebChemistry.Tunnels.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
     <SccLocalPath>Svn</SccLocalPath>
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -90,12 +93,12 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-  <PackageReference Include="Microsoft.CompilerServices.AsyncTargetingPack" Version="1.0.0" />
-  <PackageReference Include="QuickGraph" Version="3.3.51106.0" />
-  <PackageReference Include="Rx-Core" Version="2.1.30214.0" />
-  <PackageReference Include="Rx-Interfaces" Version="2.1.30214.0" />
-  <PackageReference Include="Rx-Linq" Version="2.1.30214.0" />
-  <PackageReference Include="Ix_Experimental-Main" Version="1.1.10823" />
+    <PackageReference Include="Microsoft.CompilerServices.AsyncTargetingPack" Version="1.0.0" />
+    <PackageReference Include="QuickGraph" Version="3.3.51106.0" />
+    <PackageReference Include="Rx-Core" Version="2.1.30214.0" />
+    <PackageReference Include="Rx-Interfaces" Version="2.1.30214.0" />
+    <PackageReference Include="Rx-Linq" Version="2.1.30214.0" />
+    <PackageReference Include="Ix_Experimental-Main" Version="1.1.10823" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
