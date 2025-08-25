@@ -95,6 +95,7 @@
   <PackageReference Include="Rx-Core" Version="2.1.30214.0" />
   <PackageReference Include="Rx-Interfaces" Version="2.1.30214.0" />
   <PackageReference Include="Rx-Linq" Version="2.1.30214.0" />
+  <PackageReference Include="Ix_Experimental-Main" Version="1.1.10823" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
