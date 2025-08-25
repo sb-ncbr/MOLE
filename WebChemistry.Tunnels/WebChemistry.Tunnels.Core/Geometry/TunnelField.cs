@@ -2,10 +2,8 @@
  * Copyright (c) 2016 David Sehnal, licensed under MIT license, See LICENSE file for more info.
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WebChemistry.Tunnels.Core.Helpers;
 
 namespace WebChemistry.Tunnels.Core.Geometry

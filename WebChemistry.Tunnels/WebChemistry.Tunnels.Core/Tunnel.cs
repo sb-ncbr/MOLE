@@ -9,7 +9,6 @@ namespace WebChemistry.Tunnels.Core
     using System.Linq;
     using WebChemistry.Tunnels.Core.Helpers;
     using WebChemistry.Framework.Core;
-    using WebChemistry.Framework.Geometry;
     using WebChemistry.Framework.Math;
     using System.Xml.Linq;
     using System.Globalization;

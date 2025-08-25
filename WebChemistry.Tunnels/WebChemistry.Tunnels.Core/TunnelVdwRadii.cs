@@ -4,10 +4,7 @@
 
 namespace WebChemistry.Tunnels.Core
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using WebChemistry.Framework.Core;
 
     /// <summary>

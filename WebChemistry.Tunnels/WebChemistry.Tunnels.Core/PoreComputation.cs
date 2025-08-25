@@ -9,7 +9,6 @@ namespace WebChemistry.Tunnels.Core
     using QuickGraph.Algorithms;
     using WebChemistry.Framework.Core;
     using WebChemistry.Framework.Math;
-    using WebChemistry.Framework.Geometry;
     using System;
 
     class OpeningPositionComparer : IComparer<CavityOpening>
