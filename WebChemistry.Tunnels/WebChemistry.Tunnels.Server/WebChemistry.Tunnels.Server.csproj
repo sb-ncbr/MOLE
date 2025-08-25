@@ -45,12 +45,10 @@
   <ItemGroup>
    <PackageReference Include="IronPython" Version="2.7.5" />
    <PackageReference Include="Newtonsoft.Json" Version="6.0.6" />
-       <Reference Include="QuickGraph, Version=3.3.51106.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
-      <HintPath>..\Lib\QuickGraph.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Interactive, Version=1.1.10823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+   <PackageReference Include="QuickGraph" Version="3.3.51106.0" />
+   <Reference Include="System" />
+   <Reference Include="System.Core" />
+   <Reference Include="System.Interactive, Version=1.1.10823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\System.Interactive.dll</HintPath>
     </Reference>
@@ -88,15 +86,7 @@
     <PackageReference Include="DynamicLanguageRuntime.Net40.Unofficial">
       <Version>2.6.1003.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Bcl">
-      <Version>1.1.8</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Bcl.Async">
-      <Version>1.0.168</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Bcl.Build">
-      <Version>1.0.21</Version>
-    </PackageReference>
+      <PackageReference Include="Microsoft.CompilerServices.AsyncTargetingPack" Version="1.0.0" />
     <PackageReference Include="Rx-Core">
       <Version>2.1.30214</Version>
     </PackageReference>
@@ -107,6 +97,7 @@
       <Version>2.1.30214</Version>
     </PackageReference>
     <PackageReference Include="Rx-Linq" Version="2.1.30214.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="6.0.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebChemistry.Tunnels.Core\WebChemistry.Tunnels.Core.csproj">
